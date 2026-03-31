@@ -8,17 +8,20 @@
   max-width: var(--layout-doc-content-max-width);
 }
 
+/* Heading/h5 bold — typography.json → Figma text style */
 .doc-title {
   margin: 0 0 var(--space-sm-md);
   font-size: var(--font-size-doc-page-title);
   font-weight: var(--font-weight-bold);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
+  letter-spacing: var(--letter-spacing-doc-page-title);
+  line-height: var(--line-height-doc-page-title);
 }
 
+/* Body/lg regular */
 .doc-lead {
   margin: 0;
   font-size: var(--font-size-doc-lead);
+  line-height: var(--line-height-doc-lead);
   color: var(--color-text-muted);
   max-width: 56ch;
 }

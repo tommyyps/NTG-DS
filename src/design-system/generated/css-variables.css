@@ -81,18 +81,22 @@
   --line-height-13-5: 13.5px;
   --line-height-28-5: 28.5px;
   --line-height-19-5: 19.5px;
+  --letter-spacing-none: 0px;
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  --font-size-doc-page-title: 30px;
-  --font-size-doc-lead: 18px;
-  --font-size-doc-nav-link: 14px;
-  --font-size-doc-nav-label: 12px;
-  --font-size-doc-brand-sub: 18px;
-  --font-size-code-block: 12px;
-  --line-height-doc-body: 15px;
+  --font-size-doc-page-title: var(--font-size-30);
+  --line-height-doc-page-title: var(--line-height-33);
+  --letter-spacing-doc-page-title: var(--letter-spacing-none);
+  --font-size-doc-lead: var(--font-size-18);
+  --line-height-doc-lead: var(--line-height-21);
+  --font-size-doc-nav-link: var(--font-size-14);
+  --font-size-doc-nav-label: var(--font-size-12);
+  --font-size-doc-brand-sub: var(--font-size-18);
+  --font-size-code-block: var(--font-size-12);
+  --line-height-doc-body: var(--line-height-18);
   --line-height-code-block: calc(var(--line-height-19-5) / var(--font-size-12));
   --layout-doc-sidebar-width: calc(var(--space-md-sm) * 8 + var(--space-xs-sm));
   --layout-doc-content-max-width: calc(var(--space-md-sm) * 30);
@@ -108,7 +112,7 @@
   --layout-playground-canvas-min-height: calc(var(--space-md-sm) * 6 + var(--space-xs-lg));
   --layout-playground-controls-sticky-top: calc(var(--layout-doc-topbar-height) + var(--space-sm-lg));
   --layout-breakpoint-md: 960px;
-  --letter-spacing-doc-label: 0.06em;
+  --letter-spacing-doc-label: var(--letter-spacing-none);
 
   /* ตัวแปรสั้นสำหรับเลย์เอาต์ doc site (อ้างอิง semantics เดียวกับ Figma) */
   --color-bg: var(--color-background-primary-hover);

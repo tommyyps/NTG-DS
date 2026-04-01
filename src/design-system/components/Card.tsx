@@ -13,7 +13,7 @@ export function Card({ title, description, children }: CardProps) {
         background: "var(--color-surface)",
         border: "1px solid var(--color-border)",
         borderRadius: 16,
-        padding: 20,
+        padding: "var(--space-sm-lg) var(--space-sm-xl)",
       }}
     >
       <div style={{ display: "grid", gap: 8, marginBottom: children ? 16 : 0 }}>

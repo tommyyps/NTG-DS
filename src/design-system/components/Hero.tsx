@@ -30,7 +30,7 @@ export function Hero({
         background: "linear-gradient(180deg, #eef2ff 0%, var(--color-surface) 100%)",
         border: "1px solid var(--color-border)",
         borderRadius: 20,
-        padding: 32,
+        padding: "var(--space-md-sm) var(--space-md-md)",
       }}
     >
       <Stack gap={12}>

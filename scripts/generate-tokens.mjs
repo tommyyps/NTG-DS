@@ -243,11 +243,12 @@ const layoutCss = `
   --layout-doc-content-max-width: calc(var(--space-md-sm) * 30);
   --icon-size-doc: calc(var(--icon-size-xl) - var(--space-xs-sm));
   --layout-doc-topbar-height: calc(var(--space-sm-xs) + var(--icon-size-doc) + var(--space-sm-xs) + 1px);
+  /* กฎ padding เอกสาร: block (บน/ล่าง) = token --space-T-S, inline (ซ้าย/ขวา) = ขั้นถัดไปในสเกลเดียวกัน (เช่น md-xs→md-sm, lg-lg→lg-xl) */
   --layout-doc-main-padding-block-start: var(--space-md-xs);
   --layout-doc-main-padding-inline: var(--space-md-sm);
   --layout-doc-main-padding-block-end: var(--space-lg-xs);
   --layout-doc-main-padding-block-start-mobile: var(--space-sm-lg);
-  --layout-doc-main-padding-inline-mobile: var(--space-sm-md);
+  --layout-doc-main-padding-inline-mobile: var(--space-sm-xl);
   --layout-doc-main-padding-block-end-mobile: var(--space-md-lg);
   --layout-playground-controls-width: calc(var(--space-md-sm) * 9 + var(--space-sm-xs));
   --layout-playground-canvas-min-height: calc(var(--space-md-sm) * 6 + var(--space-xs-lg));

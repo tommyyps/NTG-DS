@@ -1,123 +1,405 @@
 import type { ElementType } from "react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState, type ReactNode } from "react";
 import { Typography, dsTokens } from "../../design-system";
 import { ControlField } from "../../site/ControlField";
-import { PlaygroundShell } from "../../site/PlaygroundShell";
+import "../../site/PlaygroundShell.css";
+import "./TypographyPlayground.css";
 
 const WEIGHTS = ["bold", "semibold", "medium", "regular"] as const;
+type Weight = (typeof WEIGHTS)[number];
+
 const HEADING_LEVELS = ["h1", "h2", "h3", "h4", "h5", "h6"] as const;
-const TEXT_SIZES = ["xl", "lg", "md", "sm", "xs"] as const;
-type Group = "heading" | "text" | "article";
+const BODY_SIZES = ["xl", "lg", "md", "sm", "xs"] as const;
 
-export function TypographyPlayground() {
-  const [group, setGroup] = useState<Group>("heading");
-  const [level, setLevel] = useState<string>("h2");
-  const [weight, setWeight] = useState<(typeof WEIGHTS)[number]>("bold");
+const WEIGHT_LABELS: Record<Weight, string> = {
+  bold: "Bold (700)",
+  semibold: "Semibold (600)",
+  medium: "Medium (500)",
+  regular: "Regular (400)",
+};
 
-  const sizeOptions = group === "heading" ? HEADING_LEVELS : TEXT_SIZES;
-  const resolvedLevel = (sizeOptions as readonly string[]).includes(level)
-    ? level
-    : group === "heading"
-      ? "h2"
-      : "md";
+const SPECIMEN_SAMPLE =
+  "ถ้าคุณอ่านประโยคนี้ได้ชัดเจน แสดงว่าฟอนต์และระยะบรรทัดแสดงผลถูกต้อง";
 
-  const styleName = useMemo(
-    () => `${resolvedLevel}-${weight}`,
-    [resolvedLevel, weight],
-  );
+function styleKey(level: string, weight: Weight) {
+  return `${level}-${weight}`;
+}
 
-  const tokenGroup = dsTokens.typography[group] as Record<string, unknown>;
-  const tokenOk = Boolean(tokenGroup[styleName]);
+function tokenFontSize(
+  group: "heading" | "text" | "article",
+  level: string,
+  weight: Weight,
+): string {
+  const g = dsTokens.typography[group] as Record<
+    string,
+    { fontSize?: string }
+  >;
+  return g[styleKey(level, weight)]?.fontSize ?? "—";
+}
 
-  const asTag: ElementType =
-    group === "heading" &&
-    (HEADING_LEVELS as readonly string[]).includes(resolvedLevel)
-      ? (resolvedLevel as ElementType)
-      : "p";
+async function copyToClipboard(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("aria-hidden", "true");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    } catch {
+      return false;
+    }
+  }
+}
 
-  const sampleText =
-    group === "article"
-      ? "บทความยาวอ่านสบาย ใช้ Sarabun และ line-height ตาม token ของ Article"
-      : group === "heading"
-        ? "หัวข้อหลักของหน้าเว็บ (Prompt)"
-        : "ข้อความหน้าเว็บทั่วไป (Prompt)";
+function CodeExampleBox({
+  title,
+  code,
+  ariaLabel,
+}: {
+  title: ReactNode;
+  code: string;
+  ariaLabel: string;
+}) {
+  const [copyLabel, setCopyLabel] = useState<"copy" | "done" | "fail">("copy");
 
-  const codeAs =
-    group === "heading" &&
-    (HEADING_LEVELS as readonly string[]).includes(resolvedLevel)
-      ? resolvedLevel
-      : "p";
+  const handleCopy = useCallback(async () => {
+    const ok = await copyToClipboard(code);
+    setCopyLabel(ok ? "done" : "fail");
+    window.setTimeout(() => setCopyLabel("copy"), ok ? 1800 : 2800);
+  }, [code]);
 
-  const code = `import { Typography } from "./design-system";
-
-<Typography group="${group}" styleName="${styleName}" as="${codeAs}">
-  ${sampleText}
-</Typography>`;
+  const copyButtonText =
+    copyLabel === "done"
+      ? "คัดลอกแล้ว"
+      : copyLabel === "fail"
+        ? "คัดลอกไม่สำเร็จ"
+        : "คัดลอก";
 
   return (
-    <PlaygroundShell
-      title="03 Typography"
-      description="แสดงสไตล์ตัวอักษรจาก tokens/typography.json — เลือกกลุ่ม Heading (หน้า UI), Text (ทั่วไป), หรือ Article (บทความ) แล้วปรับระดับและน้ำหนัก"
-      preview={
-        tokenOk ? (
-          <Typography group={group} styleName={styleName} as={asTag}>
-            {sampleText}
+    <section className="code-block" aria-label={ariaLabel}>
+      <div className="code-block-header">
+        <span>{title}</span>
+        <button
+          type="button"
+          className="code-block-copy"
+          onClick={() => void handleCopy()}
+          aria-label={`คัดลอก${ariaLabel}ไปยังคลิปบอร์ด`}
+        >
+          {copyButtonText}
+        </button>
+      </div>
+      <pre>
+        <code>{code}</code>
+      </pre>
+    </section>
+  );
+}
+
+type SpecimenRowProps = {
+  group: "heading" | "text" | "article";
+  level: string;
+  weight: Weight;
+  as: ElementType;
+  label: string;
+};
+
+function SpecimenRow({ group, level, weight, as, label }: SpecimenRowProps) {
+  const sk = styleKey(level, weight);
+  const tokenGroup = dsTokens.typography[group] as Record<string, unknown>;
+  const ok = Boolean(tokenGroup[sk]);
+  const meta = tokenFontSize(group, level, weight);
+
+  return (
+    <div className="typography-specimen-row">
+      <div>
+        <div className="typography-specimen-label">{label}</div>
+        <div className="typography-specimen-meta">{meta}</div>
+      </div>
+      <div className="typography-specimen-sample">
+        {ok ? (
+          <Typography group={group} styleName={sk} as={as}>
+            {SPECIMEN_SAMPLE}
           </Typography>
         ) : (
-          <p className="playground-error">ไม่พบ token สำหรับ {styleName}</p>
-        )
-      }
-      controls={
-        <>
-          <ControlField label="กลุ่ม (Group)" hint="ตรงกับ Text styles ใน Figma">
-            <select
-              className="control-select"
-              value={group}
-              onChange={(e) => {
-                const next = e.target.value as Group;
-                setGroup(next);
-                setLevel(next === "heading" ? "h2" : "md");
-              }}
+          <p className="playground-error">ไม่พบ token {sk}</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export function TypographyPlayground() {
+  const [headingWeight, setHeadingWeight] = useState<Weight>("bold");
+  const [textWeight, setTextWeight] = useState<Weight>("regular");
+  const [articleWeight, setArticleWeight] = useState<Weight>("regular");
+
+  const headingCode = useMemo(() => {
+    const h = styleKey("h2", headingWeight);
+    return `import { Typography } from "./design-system";
+
+<Typography group="heading" styleName="${h}" as="h2">
+  การเปลี่ยนผ่านสู่ดิจิทัลของคุณเริ่มต้นที่นี่
+</Typography>`;
+  }, [headingWeight]);
+
+  const textCode = useMemo(() => {
+    const t = styleKey("md", textWeight);
+    return `import { Typography } from "./design-system";
+
+<Typography group="text" styleName="${t}" as="p">
+  ปลดล็อกศักยภาพธุรกิจของคุณให้เต็มที่
+</Typography>`;
+  }, [textWeight]);
+
+  const articleCode = useMemo(() => {
+    const a = styleKey("lg", articleWeight);
+    return `import { Typography } from "./design-system";
+
+<Typography group="article" styleName="${a}" as="p">
+  บทความและเนื้อหายาวใช้ฟอนต์ Sarabun พร้อม line-height ที่อ่านสบายตา
+</Typography>`;
+  }, [articleWeight]);
+
+  return (
+    <article className="doc-article">
+      <header className="doc-header">
+        <h1 className="doc-title">03 Typography</h1>
+        <p className="doc-lead">
+          สเปซิเมนต์ครบทุกสไตล์จาก tokens — Heading (h1–h6), Text และ Article
+          (xl–xs) ปรับน้ำหนักตัวอักษรแยกตามกลุ่มทางแถบด้านขวา
+          แล้วดูตัวอย่างหน้าเว็บจริงและโค้ดด้านล่าง
+        </p>
+      </header>
+
+      <div className="doc-playground-bleed">
+        <div className="playground">
+          <div className="playground-main">
+            <div className="playground-preview typography-specimen-wrap">
+              <div className="playground-preview-label">
+                ตัวอย่าง Font ทุกรูปแบบใน Design System
+              </div>
+              <div className="typography-specimen-body">
+                <section className="typography-specimen-group">
+                  <h2 className="typography-specimen-group-title">
+                    Heading — Prompt (h1–h6)
+                  </h2>
+                  {HEADING_LEVELS.map((level) => (
+                    <SpecimenRow
+                      key={level}
+                      group="heading"
+                      level={level}
+                      weight={headingWeight}
+                      as={level as ElementType}
+                      label={level.toUpperCase()}
+                    />
+                  ))}
+                </section>
+
+                <section className="typography-specimen-group">
+                  <h2 className="typography-specimen-group-title">
+                    Text — Prompt (xl–xs)
+                  </h2>
+                  {BODY_SIZES.map((size) => (
+                    <SpecimenRow
+                      key={size}
+                      group="text"
+                      level={size}
+                      weight={textWeight}
+                      as="p"
+                      label={size.toUpperCase()}
+                    />
+                  ))}
+                </section>
+
+                <section className="typography-specimen-group">
+                  <h2 className="typography-specimen-group-title">
+                    Article — Sarabun (xl–xs)
+                  </h2>
+                  {BODY_SIZES.map((size) => (
+                    <SpecimenRow
+                      key={size}
+                      group="article"
+                      level={size}
+                      weight={articleWeight}
+                      as="p"
+                      label={size.toUpperCase()}
+                    />
+                  ))}
+                </section>
+              </div>
+            </div>
+
+            <div className="playground-preview typography-realworld-wrap">
+              <div className="playground-preview-label">
+                ตัวอย่างการใช้งานจริงบนหน้าเว็บ
+              </div>
+              <div className="typography-realworld-body">
+                <div className="typography-realworld-section">
+                  <Typography
+                    group="heading"
+                    styleName={styleKey("h3", headingWeight)}
+                    as="h3"
+                  >
+                    โซลูชัน SaaS ที่ขับเคลื่อนผลลัพธ์
+                  </Typography>
+                  <div className="typography-realworld-stack-sm">
+                    <Typography
+                      group="text"
+                      styleName={styleKey("xl", textWeight)}
+                      as="p"
+                    >
+                      สำรวจชุดซอฟต์แวร์ที่ช่วยให้ทีมทำงานได้คล่องขึ้น ฟอนต์ดอปเพลอร์ อินทิเกรตสกรีนคีย์บอร์ดเทฟลอนดอปเพลอร์ เวก้าโน้ตบุคฟอร์เวิร์ดแอพพลิเคชันโซนาร์
+                    </Typography>
+                  </div>
+                </div>
+
+                <div className="typography-realworld-grid">
+                  <div className="typography-realworld-col">
+                    <Typography
+                      group="heading"
+                      styleName={styleKey("h6", headingWeight)}
+                      as="h4"
+                    >
+                      วางแผนองค์กร
+                    </Typography>
+                    <div className="typography-realworld-stack-xs">
+                      <Typography
+                        group="article"
+                        styleName={styleKey("md", textWeight)}
+                        as="p"
+                      >
+                        บริหารและเชื่อมโยงฟังก์ชันหลักของธุรกิจในที่เดียว
+                        เพื่อความโปร่งใสและประสิทธิภาพ ทัชแพด ไซเบอร์โฟลเดอร์ซัลเฟต สแต็กเวิร์ดโปรโตคอลซัพพอร์ททรานแซกชัน แอนะล็อกโซลูชัน แอสเซมเบลอร์โฟลเดอร์ เซิร์ฟเวอร์ดีไวซ์ เซิร์ฟเวอร์ไบต์ อัลคาไลน์มอนิเตอร์อันโดรเมดา โนวาอินทิเกรเตอร์เน็ตบุคเมลามีน โพรเซสเซอร์เลเยอร์พันธุศาสตร์โซลูชั่น เน็ตเวิร์กอัพเกรด โพรเซส ออนไลน์โซนาร์โพลาไรซ์ชิพ สเปซทรานแซ็คชั่น เทมเพลต ไดนามิกอะมิโนโค้ด
+                      </Typography>
+                    </div>
+                  </div>
+                  <div className="typography-realworld-col">
+                    <Typography
+                      group="heading"
+                      styleName={styleKey("h6", headingWeight)}
+                      as="h4"
+                    >
+                      จัดการโปรเจกต์
+                    </Typography>
+                    <div className="typography-realworld-stack-xs">
+                      <Typography
+                        group="article"
+                        styleName={styleKey("md", textWeight)}
+                        as="p"
+                      >
+                        วางแผนงาน มอบหมาย และติดตามความคืบหน้าให้ทีมไปถึงเป้าหมายคอมไพล์ทัชแพดฟิชชัน แอสเซมเบลอร์ แชนแนลโนวาสัมพัทธภาพโหลดไพธอน สัมพัทธภาพพันธุศาสตร์ดาวน์เกรดจุลชีววิทยา คอเลสเตอรอลโนวาเวิร์มอัพเกรด คอมไพเลอร์ดีบั๊ก กูเกิลเพจฟอสซิล พารามิเตอร์อินพุท บลูเรย์ กูเกิ้ลเวิร์ดแอนดรอยด์ ดอปเพลอร์เพจเจอร์ แอปพลิเคชันไดรเวอร์ ควอนตัมไฟร์วอลล์อัลตราซาวนด์โค้ด เซ็กเตอร์โดเมนแอนะล็อกฟอนต์ ดิจิทัลดอสบิต บล็อกเกอร์ฟอนต์รีเฟรช
+                      </Typography>
+                    </div>
+                  </div>
+                  <div className="typography-realworld-col">
+                    <Typography
+                      group="heading"
+                      styleName={styleKey("h6", headingWeight)}
+                      as="h4"
+                    >
+                      วิเคราะห์และรายงาน
+                    </Typography>
+                    <div className="typography-realworld-stack-xs">
+                      <Typography
+                        group="article"
+                        styleName={styleKey("md", textWeight)}
+                        as="p"
+                      >
+                        ใช้ข้อมูลเชิงลึกในการตัดสินใจและปรับกลยุทธ์ได้แม่นยำขึ้น ซัพพอร์ต สล็อตแมคทรานแซคชัน ดาวน์เกรดโมดูลฮาร์ดดิสก์เคอร์เนล อัลตราซาวนด์เมลานินอัลตราซาวด์กำทอนอัปเดต แบนด์วิดท์อีโบล่า พอร์ท อาร์กิวเมนต์ไดนามิกส์ โมดูลบลูทูธเอสเตอร์พันธุศาสตร์โนวา ซ็อกเก็ตอะลูมินา ฟอนต์โซนาร์ คลอไรด์ แอมโมเนียมเวกเตอร์ เดเบียน เวิร์กสเตชั่น แคโรทีนคอมไพเลอร์ฟอร์แมตคอมไพล์แคสสินี อีโบลาเวอร์ชันแชนแนลลูปฟีเจอร์
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="typography-code-blocks"
+              aria-label="ตัวอย่างโค้ด Typography"
             >
-              <option value="heading">Heading</option>
-              <option value="text">Text</option>
-              <option value="article">Article</option>
-            </select>
-          </ControlField>
-          <ControlField
-            label={group === "heading" ? "ระดับหัวข้อ" : "ขนาด (xl–xs)"}
-            hint="สัมพันธ์ semantics.typography.size"
+              <CodeExampleBox
+                title="Heading — หน้า UI (Prompt)"
+                code={headingCode}
+                ariaLabel="ตัวอย่างโค้ด Heading"
+              />
+              <CodeExampleBox
+                title="Text — ข้อความทั่วไป (Prompt)"
+                code={textCode}
+                ariaLabel="ตัวอย่างโค้ด Text"
+              />
+              <CodeExampleBox
+                title="Article — เนื้อหาบทความ (Sarabun)"
+                code={articleCode}
+                ariaLabel="ตัวอย่างโค้ด Article"
+              />
+            </div>
+          </div>
+
+          <aside
+            className="playground-controls"
+            aria-label="คุณสมบัติของคอมโพเนนต์"
           >
-            <select
-              className="control-select"
-              value={resolvedLevel}
-              onChange={(e) => setLevel(e.target.value)}
+            <div className="playground-controls-title">น้ำหนักตัวอักษร</div>
+            <p
+              className="control-field-hint"
+              style={{ marginTop: 0, marginBottom: "var(--space-md-xs)" }}
             >
-              {sizeOptions.map((s) => (
-                <option key={s} value={s}>
-                  {s.toUpperCase()}
-                </option>
-              ))}
-            </select>
-          </ControlField>
-          <ControlField label="น้ำหนัก" hint="bold / semibold / medium / regular">
-            <select
-              className="control-select"
-              value={weight}
-              onChange={(e) =>
-                setWeight(e.target.value as (typeof WEIGHTS)[number])
-              }
+              ควบคุมแยกตามกลุ่ม — ใช้กับสเปซิเมนต์ ตัวอย่างหน้าเว็บ และตัวอย่างโค้ด
+            </p>
+            <ControlField
+              label="Heading (h1–h6)"
+              hint="ใช้กับทุกระดับหัวข้อ Prompt"
             >
-              {WEIGHTS.map((w) => (
-                <option key={w} value={w}>
-                  {w}
-                </option>
-              ))}
-            </select>
-          </ControlField>
-        </>
-      }
-      code={code}
-    />
+              <select
+                className="control-select"
+                value={headingWeight}
+                onChange={(e) => setHeadingWeight(e.target.value as Weight)}
+              >
+                {WEIGHTS.map((w) => (
+                  <option key={w} value={w}>
+                    {WEIGHT_LABELS[w]}
+                  </option>
+                ))}
+              </select>
+            </ControlField>
+            <ControlField label="Text (xl–xs)" hint="ข้อความ UI ทั่วไป">
+              <select
+                className="control-select"
+                value={textWeight}
+                onChange={(e) => setTextWeight(e.target.value as Weight)}
+              >
+                {WEIGHTS.map((w) => (
+                  <option key={w} value={w}>
+                    {WEIGHT_LABELS[w]}
+                  </option>
+                ))}
+              </select>
+            </ControlField>
+            <ControlField label="Article (xl–xs)" hint="เนื้อหาบทความ Sarabun">
+              <select
+                className="control-select"
+                value={articleWeight}
+                onChange={(e) => setArticleWeight(e.target.value as Weight)}
+              >
+                {WEIGHTS.map((w) => (
+                  <option key={w} value={w}>
+                    {WEIGHT_LABELS[w]}
+                  </option>
+                ))}
+              </select>
+            </ControlField>
+          </aside>
+        </div>
+      </div>
+    </article>
   );
 }

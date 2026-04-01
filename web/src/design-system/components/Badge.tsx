@@ -38,7 +38,7 @@ export function Badge({ children, variant = "neutral" }: BadgeProps) {
       style={{
         display: "inline-flex",
         alignItems: "center",
-        padding: "4px 10px",
+        padding: "var(--space-xs-sm) var(--space-xs-md)",
         borderRadius: 999,
         fontSize: 12,
         fontWeight: 600,

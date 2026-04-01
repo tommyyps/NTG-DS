@@ -1,0 +1,102 @@
+.typography-specimen-wrap .typography-specimen-body {
+  padding: 0;
+}
+
+.typography-specimen-group {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.typography-specimen-group:last-of-type {
+  border-bottom: none;
+}
+
+.typography-specimen-group-title {
+  margin: 0;
+  padding: var(--space-sm-md) var(--space-sm-lg);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-doc-label);
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.typography-specimen-row {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  /* gap: var(--space-md-xs); */
+  align-items: baseline;
+  padding: var(--space-md-lg) var(--space-md-xl);
+  border-bottom: 1px solid var(--color-border-subtle, var(--color-border));
+}
+
+.typography-specimen-row:last-child {
+  border-bottom: none;
+}
+
+.typography-specimen-label {
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+}
+
+.typography-specimen-meta {
+  font-size: var(--font-size-12);
+  color: var(--color-text-muted);
+  margin-top: var(--space-xs-sm);
+}
+
+.typography-specimen-sample {
+  min-width: 0;
+  text-align: left;
+}
+
+.typography-realworld-wrap {
+  margin-top: 0;
+}
+
+.typography-realworld-body {
+  padding: var(--space-md-sm) var(--space-md-md);
+}
+
+.typography-realworld-stack-sm {
+  margin-top: var(--space-sm-md);
+}
+
+.typography-realworld-stack-xs {
+  margin-top: var(--space-xs-lg);
+}
+
+.typography-realworld-section {
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto var(--space-md-sm);
+}
+
+.typography-realworld-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-md-xs);
+  text-align: left;
+}
+
+.typography-realworld-col p {
+  margin: 0;
+}
+
+.typography-code-blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md-xs);
+}
+
+.typography-code-blocks .code-block {
+  margin-top: 0;
+}
+
+@media (max-width: 720px) {
+  .typography-realworld-grid {
+    grid-template-columns: 1fr;
+  }
+}

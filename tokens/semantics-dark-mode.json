@@ -4820,7 +4820,7 @@
       "orange": {
         "orange-50": {
           "$type": "color",
-          "$value": "{color.orange.950}",
+          "$value": "{color.brand.950}",
           "$extensions": {
             "figma": {
               "variableId": "VariableID:4392:8012",
@@ -4832,7 +4832,7 @@
         },
         "orange-100": {
           "$type": "color",
-          "$value": "{color.orange.900}",
+          "$value": "{color.brand.900}",
           "$extensions": {
             "figma": {
               "variableId": "VariableID:4392:8013",
@@ -4844,7 +4844,7 @@
         },
         "orange-200": {
           "$type": "color",
-          "$value": "{color.orange.800}",
+          "$value": "{color.brand.800}",
           "$extensions": {
             "figma": {
               "variableId": "VariableID:4392:8014",
@@ -4856,7 +4856,7 @@
         },
         "orange-300": {
           "$type": "color",
-          "$value": "{color.orange.700}",
+          "$value": "{color.brand.700}",
           "$extensions": {
             "figma": {
               "variableId": "VariableID:4392:8015",
@@ -4868,7 +4868,7 @@
         },
         "orange-400": {
           "$type": "color",
-          "$value": "{color.orange.600}",
+          "$value": "{color.brand.600}",
           "$extensions": {
             "figma": {
               "variableId": "VariableID:4392:8016",
@@ -4880,7 +4880,7 @@
         },
         "orange-500": {
           "$type": "color",
-          "$value": "{color.orange.500}",
+          "$value": "{color.brand.500}",
           "$extensions": {
             "figma": {
               "variableId": "VariableID:4392:8017",
@@ -4892,7 +4892,7 @@
         },
         "orange-600": {
           "$type": "color",
-          "$value": "{color.orange.400}",
+          "$value": "{color.brand.400}",
           "$extensions": {
             "figma": {
               "variableId": "VariableID:4392:8018",
@@ -4904,7 +4904,7 @@
         },
         "orange-700": {
           "$type": "color",
-          "$value": "{color.orange.300}",
+          "$value": "{color.brand.300}",
           "$extensions": {
             "figma": {
               "variableId": "VariableID:4392:8019",

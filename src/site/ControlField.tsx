@@ -9,8 +9,8 @@ type ControlFieldProps = {
 export function ControlField({ label, hint, children }: ControlFieldProps) {
   return (
     <label className="control-field">
-      <span className="control-field-label">{label}</span>
-      {hint ? <span className="control-field-hint">{hint}</span> : null}
+      {/* <span className="control-field-label">{label} {hint}</span> */}
+      {hint ? <span className="control-field-hint">{label} {hint}</span> : null}
       {children}
     </label>
   );

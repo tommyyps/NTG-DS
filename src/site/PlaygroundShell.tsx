@@ -4,6 +4,8 @@ import "./PlaygroundShell.css";
 type PlaygroundShellProps = {
   title: string;
   description: string;
+  /** หัวข้อแถบพรีวิว (ค่าเริ่มต้น: ตัวอย่าง) — ให้สอดคล้องกับหน้าอื่น เช่น Typography */
+  previewLabel?: string;
   preview: ReactNode;
   controls: ReactNode;
   code: string;
@@ -35,6 +37,7 @@ async function copyToClipboard(text: string): Promise<boolean> {
 export function PlaygroundShell({
   title,
   description,
+  previewLabel = "ตัวอย่าง",
   preview,
   controls,
   code,
@@ -65,25 +68,29 @@ export function PlaygroundShell({
         <div className="playground">
           <div className="playground-main">
             <div className="playground-preview">
-              <div className="playground-preview-label">ตัวอย่าง</div>
-              <div className="playground-canvas">{preview}</div>
-            </div>
-            <section className="code-block" aria-label="ตัวอย่างโค้ด">
-              <div className="code-block-header">
-                <span>ตัวอย่างโค้ด</span>
-                <button
-                  type="button"
-                  className="code-block-copy"
-                  onClick={() => void handleCopy()}
-                  aria-label="คัดลอกตัวอย่างโค้ดไปยังคลิปบอร์ด"
-                >
-                  {copyButtonText}
-                </button>
+              <div className="playground-preview-label">{previewLabel}</div>
+              <div className="playground-preview-pane">
+                <div className="playground-canvas">{preview}</div>
               </div>
-              <pre>
-                <code>{code}</code>
-              </pre>
-            </section>
+              <div className="playground-preview-code-wrap">
+                <section className="code-block" aria-label="ตัวอย่างโค้ด">
+                  <div className="code-block-header">
+                    <span>ตัวอย่างโค้ด</span>
+                    <button
+                      type="button"
+                      className="code-block-copy"
+                      onClick={() => void handleCopy()}
+                      aria-label="คัดลอกตัวอย่างโค้ดไปยังคลิปบอร์ด"
+                    >
+                      {copyButtonText}
+                    </button>
+                  </div>
+                  <pre>
+                    <code>{code}</code>
+                  </pre>
+                </section>
+              </div>
+            </div>
           </div>
           <aside
             className="playground-controls"

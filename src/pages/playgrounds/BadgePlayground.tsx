@@ -20,6 +20,7 @@ export function BadgePlayground() {
     <PlaygroundShell
       title="22 Badges"
       description="ป้ายสถานะขนาดเล็ก ใช้ประกอบป้ายหมวดหมู่ หรือสถานะสั้นๆ"
+      previewLabel="ตัวอย่าง — 22 Badges"
       preview={<Badge variant={variant}>{text}</Badge>}
       controls={
         <>

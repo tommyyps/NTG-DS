@@ -27,6 +27,7 @@ export function HeroPlayground() {
     <PlaygroundShell
       title="33 Header"
       description="33 Header — โซนหัวหน้า: หัวข้อ คำโปรย และปุ่มกระทำ (ตัวอย่างจาก Hero)"
+      previewLabel="ตัวอย่าง — 33 Header"
       preview={
         <Hero
           headingLevel={headingLevel}

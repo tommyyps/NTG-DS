@@ -1,20 +1,35 @@
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = resolve(process.cwd(), "..");
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const root = resolve(__dirname, "..");
 const primitivePath = resolve(root, "tokens/primitive.json");
 const typographyPath = resolve(root, "tokens/typography.json");
 const semanticsPath = resolve(root, "tokens/semantics-light-mode.json");
 const componentPath = resolve(root, "tokens/component.json");
+const requiredTokenFiles = [
+  primitivePath,
+  typographyPath,
+  semanticsPath,
+  componentPath,
+];
+
+if (!requiredTokenFiles.every((p) => existsSync(p))) {
+  console.warn(
+    "[tokens:generate] Skip: token source files not found in tokens/*.json",
+  );
+  process.exit(0);
+}
 
 const primitive = JSON.parse(readFileSync(primitivePath, "utf8"));
 const typography = JSON.parse(readFileSync(typographyPath, "utf8"));
 const semantics = JSON.parse(readFileSync(semanticsPath, "utf8"));
 const component = JSON.parse(readFileSync(componentPath, "utf8"));
 
-const outTsPath = resolve(process.cwd(), "src/design-system/generated/tokens.ts");
+const outTsPath = resolve(root, "src/design-system/generated/tokens.ts");
 const outCssPath = resolve(
-  process.cwd(),
+  root,
   "src/design-system/generated/css-variables.css",
 );
 
@@ -175,7 +190,6 @@ function semanticFontSizeVar(group, name) {
 }
 
 const docPageTitleStyle = typography.typography.heading["h5-bold"].$value;
-const docLeadStyle = typography.typography.text["lg-regular"].$value;
 const bodyUiLineHeightRef = typography.typography.text["md-regular"].$value.lineHeight;
 
 function emitFontWeightCss(obj) {
@@ -232,7 +246,8 @@ const layoutCss = `
   --line-height-doc-page-title: ${typographyLineHeightRefToVar(docPageTitleStyle.lineHeight)};
   --letter-spacing-doc-page-title: ${typographyLetterSpacingRefToVar(docPageTitleStyle.letterSpacing)};
   --font-size-doc-lead: ${semanticFontSizeVar("body", "lg")};
-  --line-height-doc-lead: ${typographyLineHeightRefToVar(docLeadStyle.lineHeight)};
+  /* doc-lead หลายบรรทัด: text/lg-regular ใน Figma อาจจับคู่ 21px — กับ 18px แคบเกิน ใช้ --line-height-27 (1.5×) */
+  --line-height-doc-lead: var(--line-height-27);
   --font-size-doc-nav-link: ${semanticFontSizeVar("body", "sm")};
   --font-size-doc-nav-label: ${semanticFontSizeVar("body", "xs")};
   --font-size-doc-brand-sub: ${semanticFontSizeVar("body", "lg")};
@@ -241,7 +256,7 @@ const layoutCss = `
   --line-height-code-block: calc(var(--line-height-19-5) / var(--font-size-12));
   --layout-doc-sidebar-width: calc(var(--space-md-sm) * 8 + var(--space-xs-sm));
   --layout-doc-content-max-width: calc(var(--space-md-sm) * 30);
-  --icon-size-doc: calc(var(--icon-size-xl) - var(--space-xs-sm));
+  --icon-size-doc: var(--icon-size-2xl);
   --layout-doc-topbar-height: calc(var(--space-sm-xs) + var(--icon-size-doc) + var(--space-sm-xs) + 1px);
   /* กฎ padding เอกสาร: block (บน/ล่าง) = token --space-T-S, inline (ซ้าย/ขวา) = ขั้นถัดไปในสเกลเดียวกัน (เช่น md-xs→md-sm, lg-lg→lg-xl) */
   --layout-doc-main-padding-block-start: var(--space-md-xs);

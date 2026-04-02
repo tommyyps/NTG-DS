@@ -24,7 +24,7 @@
 .doc-brand {
   display: flex;
   align-items: center;
-  gap: var(--space-sm-md);
+  gap: var(--space-sm-xs);
   flex-wrap: wrap;
   color: var(--color-text);
   text-decoration: none;
@@ -48,17 +48,28 @@
   display: block;
 }
 
-.doc-brand-sub {
-  font-size: var(--font-size-doc-brand-sub);
-  line-height: 1.35;
-  font-weight: var(--font-weight-semibold);
+.doc-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.doc-brand-heading {
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+  letter-spacing: var(--letter-spacing-none);
   color: var(--color-text);
 }
 
-.doc-topbar-hint {
-  margin: 0;
+.doc-brand-subheading {
   font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
   color: var(--color-text-muted);
+}
+
+.doc-topbar-hint {
+  font-size: var(--font-size-14);
+  color: var(--color-text-system-disabled);
 }
 
 .doc-body {
@@ -90,11 +101,10 @@
 }
 
 .doc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-lg);
   padding: var(--space-md-xs) var(--space-sm-lg) var(--space-lg-xs);
-}
-
-.doc-nav-group + .doc-nav-group {
-  margin-top: var(--space-sm-lg);
 }
 
 .doc-nav-heading {
@@ -120,7 +130,6 @@
 
 .doc-nav-list {
   list-style: none;
-  margin: 0;
   padding: 0;
 }
 

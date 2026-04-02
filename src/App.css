@@ -6,8 +6,6 @@
   background: var(--accent-bg);
   border: 2px solid transparent;
   transition: border-color 0.3s;
-  margin-bottom: 24px;
-
   &:hover {
     border-color: var(--accent-border);
   }
@@ -84,7 +82,7 @@
   }
 
   .icon {
-    margin-bottom: 16px;
+    padding-bottom: 16px;
     width: 22px;
     height: 22px;
   }
@@ -109,7 +107,7 @@
   padding: 0;
   display: flex;
   gap: 8px;
-  margin: 32px 0 0;
+  padding-top: 32px;
 
   .logo {
     height: 18px;
@@ -137,7 +135,7 @@
   }
 
   @media (max-width: 1024px) {
-    margin-top: 20px;
+    padding-top: 20px;
     flex-wrap: wrap;
     justify-content: center;
 

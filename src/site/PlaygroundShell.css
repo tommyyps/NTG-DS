@@ -38,8 +38,15 @@
   justify-content: center;
   text-align: center;
 }
-
+.playground-controls-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-sm);
+}
 .playground-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md-xs);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   padding: var(--space-md-xs) var(--space-md-sm);
@@ -53,15 +60,18 @@
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-doc-label);
+  color: var(--color-text);
+}
+
+.playground-controls-sub-title  {
+  font-size: var(--font-size-14);
   color: var(--color-text-muted);
-  margin-bottom: var(--space-md-xs);
 }
 
 .control-field {
   display: flex;
   flex-direction: column;
   gap: var(--space-xs-md);
-  margin-bottom: var(--space-md-xs);
   font-size: var(--font-size-14);
 }
 
@@ -72,7 +82,6 @@
 .control-field-hint {
   font-size: var(--font-size-12);
   color: var(--color-text-muted);
-  line-height: 1.3;
 }
 
 .control-select,
@@ -100,13 +109,11 @@
 }
 
 .playground-error {
-  margin: 0;
   color: var(--color-text-system-error);
   font-size: var(--font-size-14);
 }
 
 .code-block {
-  margin-top: 0;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -130,7 +137,6 @@
 
 .code-block-copy {
   flex-shrink: 0;
-  margin: 0;
   padding: var(--space-xs-sm) var(--space-xs-md);
   border-radius: var(--radius-sm);
   border: 1px solid var(--color-code-copy-border);
@@ -155,7 +161,6 @@
 }
 
 .code-block pre {
-  margin: 0;
   padding: var(--space-md-xs) var(--space-md-sm);
   overflow: auto;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;

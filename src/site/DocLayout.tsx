@@ -20,8 +20,9 @@ export function DocLayout() {
               className="doc-brand-logo"
               aria-hidden
             />
-            <span className="doc-brand-sub">
-              Nation Group Thailand Design System
+            <span className="doc-brand-text">
+              <span className="doc-brand-heading">NATION GROUP THAILAND</span>
+              <span className="doc-brand-subheading">Design System Version 1.0.0</span>
             </span>
           </NavLink>
         </div>

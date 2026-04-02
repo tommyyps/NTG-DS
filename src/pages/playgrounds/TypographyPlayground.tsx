@@ -18,8 +18,48 @@ const WEIGHT_LABELS: Record<Weight, string> = {
   regular: "Regular (400)",
 };
 
-const SPECIMEN_SAMPLE =
-  "ถ้าคุณอ่านประโยคนี้ได้ชัดเจน แสดงว่าฟอนต์และระยะบรรทัดแสดงผลถูกต้อง";
+/** เนื้อหาจำลองในแถวสเปซิเมนต์ — แยกตามกลุ่ม Typography */
+function specimenSampleForGroup(
+  group: "heading" | "text" | "article",
+): ReactNode {
+  if (group === "heading") {
+    return (
+      <>
+        Nation Group Thailand Design System
+        <br />
+        หัวข้อจำลองภาษาไทยหนึ่งบรรทัด สำหรับดูน้ำหนักและระยะบรรทัด
+      </>
+    );
+  }
+  if (group === "text") {
+    return (
+      <>
+        A wizard&apos;s job is to vex chumps quickly in fog.
+        <br />
+        The five boxing wizards jump quickly.
+        <br />
+        ข้อความจำลองภาษาไทยบรรทัดแรกของ Text ใช้ดูขนาดตัวอักษรและระยะบรรทัดบน UI
+        <br />
+        บรรทัดที่สองช่วยเปรียบเทียบการอ่านต่อเนื่องบนหน้าจอและคอมโพเนนต์ทั่วไป
+        <br />
+        บรรทัดที่สามปิดท้ายบล็อกข้อความจำลองของกลุ่ม Text
+      </>
+    );
+  }
+  return (
+    <>
+      Pack my box with five dozen liquor jugs.
+      <br />
+      How vexingly quick daft zebras jump!
+      <br />
+      เนื้อหาบทความจำลองภาษาไทยบรรทัดแรก ใช้ฟอนต์ Sarabun และระยะบรรทัดแบบ Article
+      <br />
+      บรรทัดที่สองจำลองย่อหน้าที่อ่านยาวขึ้นเพื่อตรวจ rhythm และความชัดของตัวอักษร
+      <br />
+      บรรทัดที่สามสรุปบล็อกข้อความจำลองของกลุ่ม Article ให้ครบตามที่กำหนด
+    </>
+  );
+}
 
 function styleKey(level: string, weight: Weight) {
   return `${level}-${weight}`;
@@ -120,14 +160,14 @@ function SpecimenRow({ group, level, weight, as, label }: SpecimenRowProps) {
 
   return (
     <div className="typography-specimen-row">
-      <div>
+      <div className="typography-specimen-meta-block">
         <div className="typography-specimen-label">{label}</div>
         <div className="typography-specimen-meta">{meta}</div>
       </div>
       <div className="typography-specimen-sample">
         {ok ? (
           <Typography group={group} styleName={sk} as={as}>
-            {SPECIMEN_SAMPLE}
+            {specimenSampleForGroup(group)}
           </Typography>
         ) : (
           <p className="playground-error">ไม่พบ token {sk}</p>
@@ -238,7 +278,7 @@ export function TypographyPlayground() {
               </div>
             </div>
 
-            <div className="playground-preview typography-realworld-wrap">
+            <div className="playground-preview">
               <div className="playground-preview-label">
                 ตัวอย่างการใช้งานจริงบนหน้าเว็บ
               </div>
@@ -251,15 +291,13 @@ export function TypographyPlayground() {
                   >
                     โซลูชัน SaaS ที่ขับเคลื่อนผลลัพธ์
                   </Typography>
-                  <div className="typography-realworld-stack-sm">
-                    <Typography
-                      group="text"
-                      styleName={styleKey("xl", textWeight)}
-                      as="p"
-                    >
-                      สำรวจชุดซอฟต์แวร์ที่ช่วยให้ทีมทำงานได้คล่องขึ้น ฟอนต์ดอปเพลอร์ อินทิเกรตสกรีนคีย์บอร์ดเทฟลอนดอปเพลอร์ เวก้าโน้ตบุคฟอร์เวิร์ดแอพพลิเคชันโซนาร์
-                    </Typography>
-                  </div>
+                  <Typography
+                    group="text"
+                    styleName={styleKey("xl", textWeight)}
+                    as="p"
+                  >
+                    สำรวจชุดซอฟต์แวร์ที่ช่วยให้ทีมทำงานได้คล่องขึ้น ฟอนต์ดอปเพลอร์ อินทิเกรตสกรีนคีย์บอร์ดเทฟลอนดอปเพลอร์ เวก้าโน้ตบุคฟอร์เวิร์ดแอพพลิเคชันโซนาร์
+                  </Typography>
                 </div>
 
                 <div className="typography-realworld-grid">
@@ -271,16 +309,14 @@ export function TypographyPlayground() {
                     >
                       วางแผนองค์กร
                     </Typography>
-                    <div className="typography-realworld-stack-xs">
-                      <Typography
-                        group="article"
-                        styleName={styleKey("md", textWeight)}
-                        as="p"
-                      >
-                        บริหารและเชื่อมโยงฟังก์ชันหลักของธุรกิจในที่เดียว
-                        เพื่อความโปร่งใสและประสิทธิภาพ ทัชแพด ไซเบอร์โฟลเดอร์ซัลเฟต สแต็กเวิร์ดโปรโตคอลซัพพอร์ททรานแซกชัน แอนะล็อกโซลูชัน แอสเซมเบลอร์โฟลเดอร์ เซิร์ฟเวอร์ดีไวซ์ เซิร์ฟเวอร์ไบต์ อัลคาไลน์มอนิเตอร์อันโดรเมดา โนวาอินทิเกรเตอร์เน็ตบุคเมลามีน โพรเซสเซอร์เลเยอร์พันธุศาสตร์โซลูชั่น เน็ตเวิร์กอัพเกรด โพรเซส ออนไลน์โซนาร์โพลาไรซ์ชิพ สเปซทรานแซ็คชั่น เทมเพลต ไดนามิกอะมิโนโค้ด
-                      </Typography>
-                    </div>
+                    <Typography
+                      group="article"
+                      styleName={styleKey("md", articleWeight)}
+                      as="p"
+                    >
+                      บริหารและเชื่อมโยงฟังก์ชันหลักของธุรกิจในที่เดียว
+                      เพื่อความโปร่งใสและประสิทธิภาพ ทัชแพด ไซเบอร์โฟลเดอร์ซัลเฟต สแต็กเวิร์ดโปรโตคอลซัพพอร์ททรานแซกชัน แอนะล็อกโซลูชัน แอสเซมเบลอร์โฟลเดอร์ เซิร์ฟเวอร์ดีไวซ์ เซิร์ฟเวอร์ไบต์ อัลคาไลน์มอนิเตอร์อันโดรเมดา โนวาอินทิเกรเตอร์เน็ตบุคเมลามีน โพรเซสเซอร์เลเยอร์พันธุศาสตร์โซลูชั่น เน็ตเวิร์กอัพเกรด โพรเซส ออนไลน์โซนาร์โพลาไรซ์ชิพ สเปซทรานแซ็คชั่น เทมเพลต ไดนามิกอะมิโนโค้ด
+                    </Typography>
                   </div>
                   <div className="typography-realworld-col">
                     <Typography
@@ -290,15 +326,13 @@ export function TypographyPlayground() {
                     >
                       จัดการโปรเจกต์
                     </Typography>
-                    <div className="typography-realworld-stack-xs">
-                      <Typography
-                        group="article"
-                        styleName={styleKey("md", textWeight)}
-                        as="p"
-                      >
-                        วางแผนงาน มอบหมาย และติดตามความคืบหน้าให้ทีมไปถึงเป้าหมายคอมไพล์ทัชแพดฟิชชัน แอสเซมเบลอร์ แชนแนลโนวาสัมพัทธภาพโหลดไพธอน สัมพัทธภาพพันธุศาสตร์ดาวน์เกรดจุลชีววิทยา คอเลสเตอรอลโนวาเวิร์มอัพเกรด คอมไพเลอร์ดีบั๊ก กูเกิลเพจฟอสซิล พารามิเตอร์อินพุท บลูเรย์ กูเกิ้ลเวิร์ดแอนดรอยด์ ดอปเพลอร์เพจเจอร์ แอปพลิเคชันไดรเวอร์ ควอนตัมไฟร์วอลล์อัลตราซาวนด์โค้ด เซ็กเตอร์โดเมนแอนะล็อกฟอนต์ ดิจิทัลดอสบิต บล็อกเกอร์ฟอนต์รีเฟรช
-                      </Typography>
-                    </div>
+                    <Typography
+                      group="article"
+                      styleName={styleKey("md", articleWeight)}
+                      as="p"
+                    >
+                      วางแผนงาน มอบหมาย และติดตามความคืบหน้าให้ทีมไปถึงเป้าหมายคอมไพล์ทัชแพดฟิชชัน แอสเซมเบลอร์ แชนแนลโนวาสัมพัทธภาพโหลดไพธอน สัมพัทธภาพพันธุศาสตร์ดาวน์เกรดจุลชีววิทยา คอเลสเตอรอลโนวาเวิร์มอัพเกรด คอมไพเลอร์ดีบั๊ก กูเกิลเพจฟอสซิล พารามิเตอร์อินพุท บลูเรย์ กูเกิ้ลเวิร์ดแอนดรอยด์ ดอปเพลอร์เพจเจอร์ แอปพลิเคชันไดรเวอร์ ควอนตัมไฟร์วอลล์อัลตราซาวนด์โค้ด เซ็กเตอร์โดเมนแอนะล็อกฟอนต์ ดิจิทัลดอสบิต บล็อกเกอร์ฟอนต์รีเฟรช
+                    </Typography>
                   </div>
                   <div className="typography-realworld-col">
                     <Typography
@@ -308,15 +342,13 @@ export function TypographyPlayground() {
                     >
                       วิเคราะห์และรายงาน
                     </Typography>
-                    <div className="typography-realworld-stack-xs">
-                      <Typography
-                        group="article"
-                        styleName={styleKey("md", textWeight)}
-                        as="p"
-                      >
-                        ใช้ข้อมูลเชิงลึกในการตัดสินใจและปรับกลยุทธ์ได้แม่นยำขึ้น ซัพพอร์ต สล็อตแมคทรานแซคชัน ดาวน์เกรดโมดูลฮาร์ดดิสก์เคอร์เนล อัลตราซาวนด์เมลานินอัลตราซาวด์กำทอนอัปเดต แบนด์วิดท์อีโบล่า พอร์ท อาร์กิวเมนต์ไดนามิกส์ โมดูลบลูทูธเอสเตอร์พันธุศาสตร์โนวา ซ็อกเก็ตอะลูมินา ฟอนต์โซนาร์ คลอไรด์ แอมโมเนียมเวกเตอร์ เดเบียน เวิร์กสเตชั่น แคโรทีนคอมไพเลอร์ฟอร์แมตคอมไพล์แคสสินี อีโบลาเวอร์ชันแชนแนลลูปฟีเจอร์
-                      </Typography>
-                    </div>
+                    <Typography
+                      group="article"
+                      styleName={styleKey("md", articleWeight)}
+                      as="p"
+                    >
+                      ใช้ข้อมูลเชิงลึกในการตัดสินใจและปรับกลยุทธ์ได้แม่นยำขึ้น ซัพพอร์ต สล็อตแมคทรานแซคชัน ดาวน์เกรดโมดูลฮาร์ดดิสก์เคอร์เนล อัลตราซาวนด์เมลานินอัลตราซาวด์กำทอนอัปเดต แบนด์วิดท์อีโบล่า พอร์ท อาร์กิวเมนต์ไดนามิกส์ โมดูลบลูทูธเอสเตอร์พันธุศาสตร์โนวา ซ็อกเก็ตอะลูมินา ฟอนต์โซนาร์ คลอไรด์ แอมโมเนียมเวกเตอร์ เดเบียน เวิร์กสเตชั่น แคโรทีนคอมไพเลอร์ฟอร์แมตคอมไพล์แคสสินี อีโบลาเวอร์ชันแชนแนลลูปฟีเจอร์
+                    </Typography>
                   </div>
                 </div>
               </div>
@@ -348,13 +380,12 @@ export function TypographyPlayground() {
             className="playground-controls"
             aria-label="คุณสมบัติของคอมโพเนนต์"
           >
-            <div className="playground-controls-title">น้ำหนักตัวอักษร</div>
-            <p
-              className="control-field-hint"
-              style={{ marginTop: 0, marginBottom: "var(--space-md-xs)" }}
-            >
-              ควบคุมแยกตามกลุ่ม — ใช้กับสเปซิเมนต์ ตัวอย่างหน้าเว็บ และตัวอย่างโค้ด
-            </p>
+            <div className="playground-controls-header">
+              <div className="playground-controls-title">น้ำหนักตัวอักษร</div>
+              <p className="playground-controls-sub-title">
+                ควบคุมแยกตามกลุ่ม — ใช้กับสเปซิเมนต์ ตัวอย่างหน้าเว็บ และตัวอย่างโค้ด
+              </p>
+            </div>
             <ControlField
               label="Heading (h1–h6)"
               hint="ใช้กับทุกระดับหัวข้อ Prompt"

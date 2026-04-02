@@ -21,6 +21,7 @@ export function ButtonPlayground() {
     <PlaygroundShell
       title="11 Buttons"
       description="ปุ่มกระทำหลัก/รอง — Typography ภายในใช้ text/sm-semibold"
+      previewLabel="ตัวอย่าง — 11 Buttons"
       preview={
         <Button variant={variant} disabled={disabled}>
           {label}

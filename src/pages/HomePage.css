@@ -12,7 +12,7 @@
   flex-direction: column;
   gap: var(--space-xs-lg);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: var(--space-sm-lg) var(--space-sm-xl);
   background: var(--color-surface);
 }

@@ -13,13 +13,17 @@
 }
 
 .playground-preview {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   background: var(--color-surface);
   overflow: hidden;
 }
 
 .playground-preview-label {
+  flex-shrink: 0;
   font-size: var(--font-size-16);
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
@@ -30,14 +34,42 @@
   background: var(--color-bg);
 }
 
+/* พื้นที่พรีวิวพื้นขาว — ใช้ร่วมกับ Typography specimen และ PlaygroundShell */
+.playground-preview-pane {
+  flex: 1 1 auto;
+  min-height: 0;
+  background: var(--color-background-primary-default);
+  padding: var(--space-md-sm) var(--space-md-md);
+  overflow: hidden;
+}
+
 .playground-canvas {
   min-height: var(--layout-playground-canvas-min-height);
-  padding: var(--space-md-xs) var(--space-md-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  overflow: hidden;
+  max-width: 100%;
 }
+
+/* โค้ดติดใต้พรีวิวในการ์ดเดียว (เช่นเดียวกับ Typography specimen) */
+.playground-preview-code-wrap {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.playground-preview-code-wrap .code-block {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  border-top: 1px solid var(--color-code-header-border, var(--color-border));
+}
+
+.playground-preview-code-wrap .code-block pre {
+  padding: var(--space-md-sm) var(--space-md-md);
+}
+
 .playground-controls-header {
   display: flex;
   flex-direction: column;
@@ -46,10 +78,10 @@
 .playground-controls {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md-xs);
+  gap: var(--space-sm-xs);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-md-xs) var(--space-md-sm);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm-xl) var(--space-sm-lg);
   background: var(--color-surface);
   position: sticky;
   top: var(--layout-playground-controls-sticky-top);
@@ -108,6 +140,58 @@
   cursor: pointer;
 }
 
+/* Checkbox / radio / range — ใช้สีแบรนด์ (ไม่ใช้ accent ระบบปฏิบัติการ) */
+.playground-controls input[type="checkbox"],
+.playground-controls input[type="radio"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  accent-color: var(--color-brand);
+  cursor: pointer;
+}
+
+.playground-controls input[type="range"] {
+  width: 100%;
+  max-width: 100%;
+  height: 1.5rem;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--color-brand);
+  background: transparent;
+}
+
+.playground-controls input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-general-secondary, var(--color-border));
+}
+
+.playground-controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -5px;
+  border-radius: var(--radius-full);
+  background: var(--color-brand);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-text-primary-default) 12%, transparent);
+}
+
+.playground-controls input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-general-secondary, var(--color-border));
+}
+
+.playground-controls input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--color-brand);
+  cursor: pointer;
+}
+
 .playground-error {
   color: var(--color-text-system-error);
   font-size: var(--font-size-14);
@@ -115,7 +199,7 @@
 
 .code-block {
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--color-code-bg);
   color: var(--color-code-text);
@@ -126,9 +210,9 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-md-xs);
-  padding: var(--space-xs-lg) var(--space-xs-xl);
-  font-size: var(--font-size-12);
-  font-weight: var(--font-weight-semibold);
+  padding: var(--space-sm-md) var(--space-sm-lg);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-doc-label);
   border-bottom: 1px solid var(--color-code-header-border);

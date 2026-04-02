@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# ความลับ — ห้าม commit (ใช้ .env.example เป็นตัวอย่างชื่อตัวแปร)
+.env
+.env.*
+!.env.example
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

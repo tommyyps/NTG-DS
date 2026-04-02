@@ -91,7 +91,8 @@
   --line-height-doc-page-title: var(--line-height-33);
   --letter-spacing-doc-page-title: var(--letter-spacing-none);
   --font-size-doc-lead: var(--font-size-18);
-  --line-height-doc-lead: var(--line-height-21);
+  /* หลายบรรทัด (ไทย): 21px กับ 18px แคบเกิน — ใช้ 27px ≈ 1.5× */
+  --line-height-doc-lead: var(--line-height-27);
   --font-size-doc-nav-link: var(--font-size-14);
   --font-size-doc-nav-label: var(--font-size-12);
   --font-size-doc-brand-sub: var(--font-size-24);

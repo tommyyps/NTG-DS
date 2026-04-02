@@ -29,13 +29,18 @@ export function CardPlayground() {
   }, [title, showDescription, description, showFooter]);
 
   const cardStyle = elevated
-    ? { boxShadow: "0 12px 30px rgba(18, 25, 38, 0.08)" }
+    ? {
+        boxShadow: "0 12px 30px rgba(18, 25, 38, 0.08)",
+        borderRadius: "var(--radius-md)",
+        overflow: "hidden",
+      }
     : {};
 
   return (
     <PlaygroundShell
       title="28 Content"
       description="28 Content — บล็อกเนื้อหา (การ์ด + หัวข้อ / คำอธิบาย / children)"
+      previewLabel="ตัวอย่าง — 28 Content"
       preview={
         <div style={cardStyle}>
           <Card

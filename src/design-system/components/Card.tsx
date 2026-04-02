@@ -14,7 +14,8 @@ export function Card({ title, description, children }: CardProps) {
         gap: 16,
         background: "var(--color-surface)",
         border: "1px solid var(--color-border)",
-        borderRadius: 16,
+        borderRadius: "var(--radius-md)",
+        overflow: "hidden",
         padding: "var(--space-sm-lg) var(--space-sm-xl)",
       }}
     >

@@ -43,6 +43,7 @@ export function StackPlayground() {
     <PlaygroundShell
       title="09 Frame"
       description="09 Frame — จัดวางอะตอมหลายตัวในแนว flex (ตัวอย่างจาก Stack layout)"
+      previewLabel="ตัวอย่าง — 09 Frame"
       preview={
         <Stack direction={direction} gap={gap} wrap={wrap}>
           {box("A", "#1e58f2")}

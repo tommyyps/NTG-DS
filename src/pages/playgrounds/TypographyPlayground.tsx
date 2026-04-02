@@ -25,9 +25,9 @@ function specimenSampleForGroup(
   if (group === "heading") {
     return (
       <>
-        Nation Group Thailand Design System
+        Heading Text
         <br />
-        หัวข้อจำลองภาษาไทยหนึ่งบรรทัด สำหรับดูน้ำหนักและระยะบรรทัด
+        หัวข้อจำลองภาษาไทย
       </>
     );
   }
@@ -177,113 +177,143 @@ function SpecimenRow({ group, level, weight, as, label }: SpecimenRowProps) {
   );
 }
 
+function specimenAsAndLabel(
+  group: "heading" | "text" | "article",
+  level: string,
+): { as: ElementType; label: string } {
+  if (group === "heading") {
+    return { as: level as ElementType, label: level.toUpperCase() };
+  }
+  return { as: "p", label: level.toUpperCase() };
+}
+
+type SpecimenSectionProps = {
+  previewLabel: string;
+  sizeAriaLabel: string;
+  sizeValue: string;
+  sizeOptions: readonly string[];
+  onSizeChange: (v: string) => void;
+  group: "heading" | "text" | "article";
+  weight: Weight;
+  codeTitle: ReactNode;
+  code: string;
+  codeAriaLabel: string;
+};
+
+function SpecimenSection({
+  previewLabel,
+  sizeAriaLabel,
+  sizeValue,
+  sizeOptions,
+  onSizeChange,
+  group,
+  weight,
+  codeTitle,
+  code,
+  codeAriaLabel,
+}: SpecimenSectionProps) {
+  const { as, label } = specimenAsAndLabel(group, sizeValue);
+
+  return (
+    <div className="playground-preview typography-specimen-section">
+      <header className="typography-specimen-card-header">
+        <h2 className="typography-specimen-card-title">{previewLabel}</h2>
+        <select
+          className="typography-specimen-header-select"
+          value={sizeValue}
+          onChange={(e) => onSizeChange(e.target.value)}
+          aria-label={sizeAriaLabel}
+        >
+          {sizeOptions.map((s) => (
+            <option key={s} value={s}>
+              {s.toUpperCase()}
+            </option>
+          ))}
+        </select>
+      </header>
+      <div className="playground-preview-pane">
+        <SpecimenRow
+          group={group}
+          level={sizeValue}
+          weight={weight}
+          as={as}
+          label={label}
+        />
+      </div>
+      <div className="playground-preview-code-wrap">
+        <CodeExampleBox
+          title={codeTitle}
+          code={code}
+          ariaLabel={codeAriaLabel}
+        />
+      </div>
+    </div>
+  );
+}
+
 export function TypographyPlayground() {
   const [headingWeight, setHeadingWeight] = useState<Weight>("bold");
   const [textWeight, setTextWeight] = useState<Weight>("regular");
   const [articleWeight, setArticleWeight] = useState<Weight>("regular");
 
+  const [headingCodeLevel, setHeadingCodeLevel] = useState<
+    (typeof HEADING_LEVELS)[number]
+  >("h2");
+  const [textCodeSize, setTextCodeSize] = useState<(typeof BODY_SIZES)[number]>(
+    "md",
+  );
+  const [articleCodeSize, setArticleCodeSize] = useState<
+    (typeof BODY_SIZES)[number]
+  >("lg");
+
   const headingCode = useMemo(() => {
-    const h = styleKey("h2", headingWeight);
+    const sk = styleKey(headingCodeLevel, headingWeight);
     return `import { Typography } from "./design-system";
 
-<Typography group="heading" styleName="${h}" as="h2">
+<Typography group="heading" styleName="${sk}" as="${headingCodeLevel}">
   การเปลี่ยนผ่านสู่ดิจิทัลของคุณเริ่มต้นที่นี่
 </Typography>`;
-  }, [headingWeight]);
+  }, [headingCodeLevel, headingWeight]);
 
   const textCode = useMemo(() => {
-    const t = styleKey("md", textWeight);
+    const t = styleKey(textCodeSize, textWeight);
     return `import { Typography } from "./design-system";
 
 <Typography group="text" styleName="${t}" as="p">
   ปลดล็อกศักยภาพธุรกิจของคุณให้เต็มที่
 </Typography>`;
-  }, [textWeight]);
+  }, [textCodeSize, textWeight]);
 
   const articleCode = useMemo(() => {
-    const a = styleKey("lg", articleWeight);
+    const a = styleKey(articleCodeSize, articleWeight);
     return `import { Typography } from "./design-system";
 
 <Typography group="article" styleName="${a}" as="p">
   บทความและเนื้อหายาวใช้ฟอนต์ Sarabun พร้อม line-height ที่อ่านสบายตา
 </Typography>`;
-  }, [articleWeight]);
+  }, [articleCodeSize, articleWeight]);
 
   return (
     <article className="doc-article">
       <header className="doc-header">
         <h1 className="doc-title">03 Typography</h1>
         <p className="doc-lead">
-          สเปซิเมนต์ครบทุกสไตล์จาก tokens — Heading (h1–h6), Text และ Article
-          (xl–xs) ปรับน้ำหนักตัวอักษรแยกตามกลุ่มทางแถบด้านขวา
-          แล้วดูตัวอย่างหน้าเว็บจริงและโค้ดด้านล่าง
+          ดูตัวอย่างการใช้งานจริงก่อน จากนั้นแยกการ์ด Heading, Text และ Article
+          — เลือกขนาดที่มุมขวาของแต่ละการ์ดเพื่อดูพรีวิวและโค้ดที่สอดคล้องกัน
+          ปรับน้ำหนักแยกตามกลุ่มทางแถบด้านขวา
         </p>
       </header>
 
       <div className="doc-playground-bleed">
         <div className="playground">
           <div className="playground-main">
-            <div className="playground-preview typography-specimen-wrap">
-              <div className="playground-preview-label">
-                ตัวอย่าง Font ทุกรูปแบบใน Design System
-              </div>
-              <div className="typography-specimen-body">
-                <section className="typography-specimen-group">
-                  <h2 className="typography-specimen-group-title">
-                    Heading — Prompt (h1–h6)
-                  </h2>
-                  {HEADING_LEVELS.map((level) => (
-                    <SpecimenRow
-                      key={level}
-                      group="heading"
-                      level={level}
-                      weight={headingWeight}
-                      as={level as ElementType}
-                      label={level.toUpperCase()}
-                    />
-                  ))}
-                </section>
-
-                <section className="typography-specimen-group">
-                  <h2 className="typography-specimen-group-title">
-                    Text — Prompt (xl–xs)
-                  </h2>
-                  {BODY_SIZES.map((size) => (
-                    <SpecimenRow
-                      key={size}
-                      group="text"
-                      level={size}
-                      weight={textWeight}
-                      as="p"
-                      label={size.toUpperCase()}
-                    />
-                  ))}
-                </section>
-
-                <section className="typography-specimen-group">
-                  <h2 className="typography-specimen-group-title">
-                    Article — Sarabun (xl–xs)
-                  </h2>
-                  {BODY_SIZES.map((size) => (
-                    <SpecimenRow
-                      key={size}
-                      group="article"
-                      level={size}
-                      weight={articleWeight}
-                      as="p"
-                      label={size.toUpperCase()}
-                    />
-                  ))}
-                </section>
-              </div>
-            </div>
-
             <div className="playground-preview">
               <div className="playground-preview-label">
                 ตัวอย่างการใช้งานจริงบนหน้าเว็บ
               </div>
-              <div className="typography-realworld-body">
-                <div className="typography-realworld-section">
+              <div className="playground-preview-pane">
+                <div className="typography-realworld-body">
+                  <div className="typography-realworld-section">
                   <Typography
                     group="heading"
                     styleName={styleKey("h3", headingWeight)}
@@ -296,11 +326,13 @@ export function TypographyPlayground() {
                     styleName={styleKey("xl", textWeight)}
                     as="p"
                   >
-                    สำรวจชุดซอฟต์แวร์ที่ช่วยให้ทีมทำงานได้คล่องขึ้น ฟอนต์ดอปเพลอร์ อินทิเกรตสกรีนคีย์บอร์ดเทฟลอนดอปเพลอร์ เวก้าโน้ตบุคฟอร์เวิร์ดแอพพลิเคชันโซนาร์
+                    สำรวจชุดซอฟต์แวร์ที่ช่วยให้ทีมทำงานได้คล่องขึ้น ฟอนต์ดอปเพลอร์
+                    อินทิเกรตสกรีนคีย์บอร์ดเทฟลอนดอปเพลอร์
+                    เวก้าโน้ตบุคฟอร์เวิร์ดแอพพลิเคชันโซนาร์
                   </Typography>
-                </div>
+                  </div>
 
-                <div className="typography-realworld-grid">
+                  <div className="typography-realworld-grid">
                   <div className="typography-realworld-col">
                     <Typography
                       group="heading"
@@ -315,7 +347,15 @@ export function TypographyPlayground() {
                       as="p"
                     >
                       บริหารและเชื่อมโยงฟังก์ชันหลักของธุรกิจในที่เดียว
-                      เพื่อความโปร่งใสและประสิทธิภาพ ทัชแพด ไซเบอร์โฟลเดอร์ซัลเฟต สแต็กเวิร์ดโปรโตคอลซัพพอร์ททรานแซกชัน แอนะล็อกโซลูชัน แอสเซมเบลอร์โฟลเดอร์ เซิร์ฟเวอร์ดีไวซ์ เซิร์ฟเวอร์ไบต์ อัลคาไลน์มอนิเตอร์อันโดรเมดา โนวาอินทิเกรเตอร์เน็ตบุคเมลามีน โพรเซสเซอร์เลเยอร์พันธุศาสตร์โซลูชั่น เน็ตเวิร์กอัพเกรด โพรเซส ออนไลน์โซนาร์โพลาไรซ์ชิพ สเปซทรานแซ็คชั่น เทมเพลต ไดนามิกอะมิโนโค้ด
+                      เพื่อความโปร่งใสและประสิทธิภาพ ทัชแพด
+                      ไซเบอร์โฟลเดอร์ซัลเฟต
+                      สแต็กเวิร์ดโปรโตคอลซัพพอร์ททรานแซกชัน แอนะล็อกโซลูชัน
+                      แอสเซมเบลอร์โฟลเดอร์ เซิร์ฟเวอร์ดีไวซ์ เซิร์ฟเวอร์ไบต์
+                      อัลคาไลน์มอนิเตอร์อันโดรเมดา
+                      โนวาอินทิเกรเตอร์เน็ตบุคเมลามีน
+                      โพรเซสเซอร์เลเยอร์พันธุศาสตร์โซลูชั่น เน็ตเวิร์กอัพเกรด
+                      โพรเซส ออนไลน์โซนาร์โพลาไรซ์ชิพ สเปซทรานแซ็คชั่น เทมเพลต
+                      ไดนามิกอะมิโนโค้ด
                     </Typography>
                   </div>
                   <div className="typography-realworld-col">
@@ -331,7 +371,16 @@ export function TypographyPlayground() {
                       styleName={styleKey("md", articleWeight)}
                       as="p"
                     >
-                      วางแผนงาน มอบหมาย และติดตามความคืบหน้าให้ทีมไปถึงเป้าหมายคอมไพล์ทัชแพดฟิชชัน แอสเซมเบลอร์ แชนแนลโนวาสัมพัทธภาพโหลดไพธอน สัมพัทธภาพพันธุศาสตร์ดาวน์เกรดจุลชีววิทยา คอเลสเตอรอลโนวาเวิร์มอัพเกรด คอมไพเลอร์ดีบั๊ก กูเกิลเพจฟอสซิล พารามิเตอร์อินพุท บลูเรย์ กูเกิ้ลเวิร์ดแอนดรอยด์ ดอปเพลอร์เพจเจอร์ แอปพลิเคชันไดรเวอร์ ควอนตัมไฟร์วอลล์อัลตราซาวนด์โค้ด เซ็กเตอร์โดเมนแอนะล็อกฟอนต์ ดิจิทัลดอสบิต บล็อกเกอร์ฟอนต์รีเฟรช
+                      วางแผนงาน มอบหมาย
+                      และติดตามความคืบหน้าให้ทีมไปถึงเป้าหมายคอมไพล์ทัชแพดฟิชชัน
+                      แอสเซมเบลอร์ แชนแนลโนวาสัมพัทธภาพโหลดไพธอน
+                      สัมพัทธภาพพันธุศาสตร์ดาวน์เกรดจุลชีววิทยา
+                      คอเลสเตอรอลโนวาเวิร์มอัพเกรด คอมไพเลอร์ดีบั๊ก กูเกิลเพจฟอสซิล
+                      พารามิเตอร์อินพุท บลูเรย์ กูเกิ้ลเวิร์ดแอนดรอยด์
+                      ดอปเพลอร์เพจเจอร์ แอปพลิเคชันไดรเวอร์
+                      ควอนตัมไฟร์วอลล์อัลตราซาวนด์โค้ด
+                      เซ็กเตอร์โดเมนแอนะล็อกฟอนต์ ดิจิทัลดอสบิต
+                      บล็อกเกอร์ฟอนต์รีเฟรช
                     </Typography>
                   </div>
                   <div className="typography-realworld-col">
@@ -347,33 +396,66 @@ export function TypographyPlayground() {
                       styleName={styleKey("md", articleWeight)}
                       as="p"
                     >
-                      ใช้ข้อมูลเชิงลึกในการตัดสินใจและปรับกลยุทธ์ได้แม่นยำขึ้น ซัพพอร์ต สล็อตแมคทรานแซคชัน ดาวน์เกรดโมดูลฮาร์ดดิสก์เคอร์เนล อัลตราซาวนด์เมลานินอัลตราซาวด์กำทอนอัปเดต แบนด์วิดท์อีโบล่า พอร์ท อาร์กิวเมนต์ไดนามิกส์ โมดูลบลูทูธเอสเตอร์พันธุศาสตร์โนวา ซ็อกเก็ตอะลูมินา ฟอนต์โซนาร์ คลอไรด์ แอมโมเนียมเวกเตอร์ เดเบียน เวิร์กสเตชั่น แคโรทีนคอมไพเลอร์ฟอร์แมตคอมไพล์แคสสินี อีโบลาเวอร์ชันแชนแนลลูปฟีเจอร์
+                      ใช้ข้อมูลเชิงลึกในการตัดสินใจและปรับกลยุทธ์ได้แม่นยำขึ้น
+                      ซัพพอร์ต สล็อตแมคทรานแซคชัน
+                      ดาวน์เกรดโมดูลฮาร์ดดิสก์เคอร์เนล
+                      อัลตราซาวนด์เมลานินอัลตราซาวด์กำทอนอัปเดต
+                      แบนด์วิดท์อีโบล่า พอร์ท อาร์กิวเมนต์ไดนามิกส์
+                      โมดูลบลูทูธเอสเตอร์พันธุศาสตร์โนวา ซ็อกเก็ตอะลูมินา
+                      ฟอนต์โซนาร์ คลอไรด์ แอมโมเนียมเวกเตอร์ เดเบียน
+                      เวิร์กสเตชั่น แคโรทีนคอมไพเลอร์ฟอร์แมตคอมไพล์แคสสินี
+                      อีโบลาเวอร์ชันแชนแนลลูปฟีเจอร์
                     </Typography>
+                  </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div
-              className="typography-code-blocks"
-              aria-label="ตัวอย่างโค้ด Typography"
-            >
-              <CodeExampleBox
-                title="Heading — หน้า UI (Prompt)"
-                code={headingCode}
-                ariaLabel="ตัวอย่างโค้ด Heading"
-              />
-              <CodeExampleBox
-                title="Text — ข้อความทั่วไป (Prompt)"
-                code={textCode}
-                ariaLabel="ตัวอย่างโค้ด Text"
-              />
-              <CodeExampleBox
-                title="Article — เนื้อหาบทความ (Sarabun)"
-                code={articleCode}
-                ariaLabel="ตัวอย่างโค้ด Article"
-              />
-            </div>
+            <SpecimenSection
+              previewLabel="ตัวอย่าง Heading — Prompt (h1–h6)"
+              sizeAriaLabel="เลือกระดับหัวข้อ H1–H6"
+              sizeValue={headingCodeLevel}
+              sizeOptions={HEADING_LEVELS}
+              onSizeChange={(v) =>
+                setHeadingCodeLevel(v as (typeof HEADING_LEVELS)[number])
+              }
+              group="heading"
+              weight={headingWeight}
+              codeTitle="ตัวอย่างโค้ด — Heading"
+              code={headingCode}
+              codeAriaLabel="ตัวอย่างโค้ด Heading"
+            />
+
+            <SpecimenSection
+              previewLabel="ตัวอย่าง Text — Prompt (xl–xs)"
+              sizeAriaLabel="เลือกขนาด Text xl–xs"
+              sizeValue={textCodeSize}
+              sizeOptions={BODY_SIZES}
+              onSizeChange={(v) =>
+                setTextCodeSize(v as (typeof BODY_SIZES)[number])
+              }
+              group="text"
+              weight={textWeight}
+              codeTitle="ตัวอย่างโค้ด — Text"
+              code={textCode}
+              codeAriaLabel="ตัวอย่างโค้ด Text"
+            />
+
+            <SpecimenSection
+              previewLabel="ตัวอย่าง Article — Sarabun (xl–xs)"
+              sizeAriaLabel="เลือกขนาด Article xl–xs"
+              sizeValue={articleCodeSize}
+              sizeOptions={BODY_SIZES}
+              onSizeChange={(v) =>
+                setArticleCodeSize(v as (typeof BODY_SIZES)[number])
+              }
+              group="article"
+              weight={articleWeight}
+              codeTitle="ตัวอย่างโค้ด — Article"
+              code={articleCode}
+              codeAriaLabel="ตัวอย่างโค้ด Article"
+            />
           </div>
 
           <aside
@@ -383,7 +465,7 @@ export function TypographyPlayground() {
             <div className="playground-controls-header">
               <div className="playground-controls-title">น้ำหนักตัวอักษร</div>
               <p className="playground-controls-sub-title">
-                ควบคุมแยกตามกลุ่ม — ใช้กับสเปซิเมนต์ ตัวอย่างหน้าเว็บ และตัวอย่างโค้ด
+                ควบคุมแยกตามกลุ่ม — ใช้กับสเปซิเมนต์และตัวอย่างหน้าเว็บ
               </p>
             </div>
             <ControlField

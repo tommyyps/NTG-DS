@@ -190,7 +190,6 @@ function semanticFontSizeVar(group, name) {
 }
 
 const docPageTitleStyle = typography.typography.heading["h5-bold"].$value;
-const docLeadStyle = typography.typography.text["lg-regular"].$value;
 const bodyUiLineHeightRef = typography.typography.text["md-regular"].$value.lineHeight;
 
 function emitFontWeightCss(obj) {
@@ -247,7 +246,8 @@ const layoutCss = `
   --line-height-doc-page-title: ${typographyLineHeightRefToVar(docPageTitleStyle.lineHeight)};
   --letter-spacing-doc-page-title: ${typographyLetterSpacingRefToVar(docPageTitleStyle.letterSpacing)};
   --font-size-doc-lead: ${semanticFontSizeVar("body", "lg")};
-  --line-height-doc-lead: ${typographyLineHeightRefToVar(docLeadStyle.lineHeight)};
+  /* doc-lead หลายบรรทัด: text/lg-regular ใน Figma อาจจับคู่ 21px — กับ 18px แคบเกิน ใช้ --line-height-27 (1.5×) */
+  --line-height-doc-lead: var(--line-height-27);
   --font-size-doc-nav-link: ${semanticFontSizeVar("body", "sm")};
   --font-size-doc-nav-label: ${semanticFontSizeVar("body", "xs")};
   --font-size-doc-brand-sub: ${semanticFontSizeVar("body", "lg")};

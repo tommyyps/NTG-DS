@@ -1,8 +1,8 @@
 /* การ์ดสเปซิเมนต์: แถบหัว + พรีวิว + โค้ด (ใช้ .playground-preview-pane / .playground-preview-code-wrap จาก PlaygroundShell) */
 .typography-specimen-card-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  justify-content: space-between;
   gap: var(--space-sm-md);
   flex-shrink: 0;
   padding: var(--space-sm-md) var(--space-sm-lg);
@@ -124,11 +124,11 @@
   }
 
   .typography-specimen-card-header {
-    flex-wrap: wrap;
-    align-items: flex-start;
+    grid-template-columns: 1fr;
+    justify-items: stretch;
   }
 
   .typography-specimen-header-select {
-    margin-left: auto;
+    justify-self: end;
   }
 }

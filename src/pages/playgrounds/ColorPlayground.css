@@ -1,0 +1,603 @@
+/* หน้า 01 Color — คอลัมน์เดียว สอดคล้อง playground-preview */
+.color-page-column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-sm-xl);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+/* การ์ด Documentation เต็มความกว้างคอลัมน์ — เนื้อหาข้างใน pane ขยายตาม */
+.color-playground-preview--docs {
+  width: 100%;
+  align-self: stretch;
+}
+
+.color-doc-playground-pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.color-doc-pane-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg-sm);
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/*
+ * บล็อกเอกสารในการ์ด Documentation — ใช้เฉพาะภายใน .color-doc-playground-pane
+ * รวม selector เดียวเพื่อไม่ให้สับสนกับ max-width 72ch ที่เคยใช้คู่กับ override
+ */
+.color-doc-playground-pane .color-doc-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-sm);
+  margin: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.color-doc-playground-pane .color-doc-block--tiers {
+  gap: var(--space-sm-md);
+}
+
+/* ตัวอย่างระดับชั้นของสี (Figma 8541:6971) */
+.color-tiers-diagram {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: var(--color-background-primary-default);
+  border: 1px solid var(--color-border-general-secondary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.color-tiers-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.color-tiers-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm-md);
+  padding: var(--space-sm-md) var(--space-sm-xl);
+  background: var(--color-background-primary-default);
+}
+
+.color-tiers-row:not(:last-child) {
+  border-bottom: 1px solid var(--color-border-general-secondary);
+}
+
+.color-tiers-row--component {
+  row-gap: var(--space-sm-sm);
+}
+
+.color-tiers-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--color-border-general-primary);
+  border-radius: var(--radius-full);
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-18);
+  letter-spacing: 0.02em;
+  color: var(--color-text-quaternary-default);
+}
+
+.color-tiers-tier-label {
+  flex: 0 0 100px;
+  min-width: 5rem;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-21);
+  color: var(--color-text-primary-default);
+}
+
+.color-tiers-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs-lg);
+  padding: var(--space-xs-sm) var(--space-xs-lg) var(--space-xs-sm) var(--space-xs-md);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary-default) 10%, transparent);
+  border-radius: var(--radius-full);
+  background: var(--color-background-primary-default);
+}
+
+.color-tiers-swatch-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid color-mix(in srgb, var(--color-text-primary-default) 10%, transparent);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.color-tiers-swatch {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-text-primary-default) 5%, transparent);
+}
+
+.color-tiers-pill-value {
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-21);
+  color: var(--color-text-primary-default);
+  white-space: nowrap;
+}
+
+.color-tiers-arrow {
+  flex-shrink: 0;
+  color: var(--color-text-secondary-default);
+}
+
+.color-tiers-demo-button {
+  flex-shrink: 0;
+  margin: 0;
+  padding: var(--space-xs-sm) var(--space-xs-lg);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-21);
+  color: var(--color-text-system-white);
+  background: var(--color-text-brand-primary);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-text-primary-default) 5%, transparent);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ตัวอย่างระดับ WCAG — ไม่มีกรอบชั้นนอก; กว้างเท่ากล่อง+gap ไม่ยืดตามจอ */
+.color-wcag-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm-md);
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.color-wcag-demo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 120px;
+  aspect-ratio: 1;
+  height: auto;
+  border-radius: var(--radius-md);
+  background: var(--color-text-brand-primary);
+}
+
+.color-wcag-demo-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--font-family-primary);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-24);
+  letter-spacing: var(--letter-spacing-none);
+}
+
+.color-wcag-demo-line {
+  display: block;
+}
+
+.color-wcag-demo-inner--aaa .color-wcag-demo-line {
+  color: var(--color-text-system-white);
+}
+
+.color-wcag-demo-inner--aa .color-wcag-demo-line {
+  color: #bdd8ff;
+}
+
+.color-wcag-demo-inner--a .color-wcag-demo-line {
+  color: #90c0ff;
+}
+
+/*
+ * Documentation (01 Color) — ลำดับชั้นไทโป: หัวบล็อกใหญ่สุด → หัวกลุ่มย่อย → คำนำใต้หัว → เนื้อหา/รายการ → รายการแตกตัวอย่าง
+ * ระดับ 1: .color-doc-h3  | 2: .color-doc-subsection-title  | 3: ย่อหน้าใน .color-doc-subsection-head
+ * ระดับ 4: .color-doc-p + .color-doc-list  | 5: .color-doc-em ในเนื้อหา  | 6: .color-doc-example-breakdown
+ */
+
+/* ระดับ 1 — หัวข้อหลักของแต่ละบล็อกใน Documentation */
+.color-doc-h3 {
+  margin: 0;
+  font-size: var(--font-size-20);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-27);
+  letter-spacing: var(--letter-spacing-none);
+  color: var(--color-text-primary-default);
+}
+
+/* สำรอง: หัวข้อรองทั่วไป (ยังไม่ใช้ใน Color ปัจจุบัน) */
+.color-doc-h4 {
+  margin: 0;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-24);
+  color: var(--color-text-primary-default);
+}
+
+.color-doc-naming-subsections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md-sm);
+}
+
+.color-doc-subsection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-xl);
+}
+
+/* ระดับ 2 — หัวข้อกลุ่มย่อย (Namespace, Object, ตัวอย่าง ฯลฯ) */
+.color-doc-subsection-title {
+  margin: 0;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-24);
+  letter-spacing: var(--letter-spacing-none);
+  color: var(--color-text-primary-default);
+}
+
+/* ระดับ 3 — คำอธิบายสั้นใต้หัวกลุ่มย่อย (ชิดหัวข้อ) */
+.color-doc-subsection-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs-xs);
+}
+
+.color-doc-subsection-head > .color-doc-p {
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-21);
+  color: var(--color-text-quaternary-default);
+}
+
+/* บรรทัดที่มีโค้ดในกลุ่มหัว — อ่านชัดขึ้นเล็กน้อย */
+.color-doc-subsection-head > .color-doc-p:has(code) {
+  color: var(--color-text-secondary-default);
+}
+
+/* ระดับ 6 — แตกส่วนชื่อโทเค็นตัวอย่าง (เล็กกว่าเนื้อหาหลัก) */
+.color-doc-example-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-sm);
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-18);
+  color: var(--color-text-quaternary-default);
+}
+
+.color-doc-example-breakdown li {
+  margin: 0;
+}
+
+.color-doc-example-breakdown code {
+  font-size: 0.95em;
+}
+
+/* ระดับ 5 — คำศัพท์เน้นในเนื้อหา: หนากว่าข้อความธรรมดา แต่ไม่หนากว่าหัวข้อกลุ่มย่อย */
+.color-doc-em {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary-default);
+}
+
+/* ระดับ 4 — เนื้อหาหลักของบล็อก (Tier, WCAG คำนำ ฯลฯ) */
+.color-doc-p {
+  margin: 0;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-24);
+  color: var(--color-text-secondary-default);
+}
+
+/* ระดับ 4 — รายการธรรมดา สอดคล้องเนื้อหาหลัก */
+.color-doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-md);
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-24);
+  color: var(--color-text-secondary-default);
+}
+
+.color-doc-p--measure {
+  max-width: 72ch;
+  width: 100%;
+}
+
+.color-doc-p code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-xs);
+  background: var(--color-background-primary-hover);
+  border: 1px solid var(--color-border-general-secondary);
+  color: var(--color-text-primary-default);
+}
+
+/* จานสี + contrast */
+.color-palette-pane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md-sm);
+  min-width: 0;
+  max-height: min(85vh, 1200px);
+  overflow: auto;
+}
+
+.color-palette-family-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-md);
+  min-width: 0;
+}
+
+.color-palette-family-note {
+  margin: 0;
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-21);
+  color: var(--color-text-quaternary-default);
+  max-width: 72ch;
+}
+
+.color-palette-family-title {
+  margin: 0;
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-doc-label);
+}
+
+.color-palette-table-wrap {
+  overflow-x: auto;
+  margin: 0;
+  border: 1px solid var(--color-border-general-secondary);
+  border-radius: var(--radius-md);
+}
+
+.color-palette-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-12);
+  font-family: var(--font-family-primary);
+}
+
+.color-palette-table th,
+.color-palette-table td {
+  padding: var(--space-xs-md) var(--space-sm-sm);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-general-secondary);
+  vertical-align: middle;
+}
+
+.color-palette-table th {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-doc-label);
+  white-space: nowrap;
+}
+
+.color-palette-table tr:last-child td {
+  border-bottom: none;
+}
+
+.color-palette-table-token {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: var(--font-size-12);
+  word-break: break-all;
+  max-width: 14rem;
+  color: var(--color-text-primary-default);
+}
+
+.color-palette-swatch-cell {
+  width: 3rem;
+}
+
+.color-palette-mini-swatch {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-text-primary-default) 10%, transparent);
+}
+
+.color-contrast-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs-sm);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.color-contrast-badge {
+  display: inline-block;
+  padding: 0 var(--space-xs-sm);
+  border-radius: var(--radius-xs);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-semibold);
+}
+
+.color-contrast-badge.is-aaa {
+  background: color-mix(in srgb, #039855 14%, transparent);
+  color: #027a48;
+}
+
+.color-contrast-badge.is-aa {
+  background: var(--color-doc-badge-bg);
+  color: var(--color-text-brand-primary);
+}
+
+.color-contrast-badge.is-a {
+  background: var(--color-background-primary-hover);
+  color: var(--color-text-quaternary-default);
+}
+
+.color-palette-na {
+  color: var(--color-text-quaternary-default);
+}
+
+/* ตารางตัวแปร semantic / utility */
+.color-playground-pane-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md-lg);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.color-var-table-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-md);
+  min-width: 0;
+}
+
+.color-var-section-title {
+  margin: 0;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary-default);
+}
+
+.color-var-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border-general-secondary);
+  border-radius: var(--radius-md);
+  margin: 0;
+}
+
+.color-var-table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+  font-size: var(--font-size-14);
+}
+
+.color-var-table th,
+.color-var-table td {
+  padding: var(--space-sm-sm) var(--space-sm-md);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-general-secondary);
+  vertical-align: top;
+}
+
+.color-var-table th {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-12);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-doc-label);
+}
+
+.color-var-table tr:last-child td {
+  border-bottom: none;
+}
+
+.color-var-table .num {
+  width: 2.5rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-quaternary-default);
+}
+
+.color-var-table-token {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: var(--font-size-12);
+  word-break: break-all;
+  color: var(--color-text-primary-default);
+}
+
+.color-var-sample {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm-sm);
+}
+
+.color-var-sample-swatch {
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 0 0 1px var(--color-border-general-secondary);
+}
+
+.color-var-hex {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: var(--font-size-12);
+  color: var(--color-text-secondary-default);
+}
+
+.color-var-detail {
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-21);
+  color: var(--color-text-secondary-default);
+  max-width: 28ch;
+}
+
+.color-var-footnote {
+  margin: 0;
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-21);
+  color: var(--color-text-quaternary-default);
+  max-width: 72ch;
+}
+
+.color-var-footnote code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.92em;
+  color: var(--color-text-secondary-default);
+}
+
+/* token โหมดมืดว่าง */
+.color-var-dash {
+  color: var(--color-text-quaternary-default);
+}

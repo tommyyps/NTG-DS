@@ -6,6 +6,13 @@
   max-width: none;
 }
 
+/* ไม่ให้เนื้อหา playground ดันความกว้างเลย์เอาต์หลักเมื่อมี min-content ใหญ่ */
+.doc-playground-bleed {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
 .doc-header {
   display: flex;
   flex-direction: column;

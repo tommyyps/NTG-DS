@@ -77,6 +77,7 @@ export const NAV_GROUPS: NavGroup[] = [
 
 /** เส้นทางที่มีหน้า playground พร้อมใช้งานแล้ว */
 export const PLAYGROUND_PATHS = new Set([
+  "/atoms/color",
   "/atoms/typography",
   "/molecules/buttons",
   "/molecules/badges",

@@ -158,7 +158,7 @@
 .color-tiers-demo-button {
   flex-shrink: 0;
   margin: 0;
-  padding: var(--space-xs-sm) var(--space-xs-lg);
+  padding: var(--space-xs-sm) var(--space-xs-md);
   border: none;
   border-radius: 6px;
   font-family: var(--font-family-primary);
@@ -375,110 +375,102 @@
 .color-palette-family-block {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm-md);
+  gap: var(--space-xs-xl);
   min-width: 0;
 }
 
-.color-palette-family-note {
-  margin: 0;
-  font-size: var(--font-size-14);
-  line-height: var(--line-height-21);
-  color: var(--color-text-quaternary-default);
-  max-width: 72ch;
-}
-
-.color-palette-family-title {
-  margin: 0;
-  font-size: var(--font-size-14);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-text-muted);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-doc-label);
-}
-
-.color-palette-table-wrap {
+.color-palette-row-wrap {
   overflow-x: auto;
   margin: 0;
-  border: 1px solid var(--color-border-general-secondary);
+  padding-bottom: var(--space-xs-sm);
+  -webkit-overflow-scrolling: touch;
+}
+
+.color-palette-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm-sm);
+  align-items: flex-start;
+}
+
+/* การ์ดสีแนวนอน — ขนาดกะทัดรัด */
+.color-palette-swatch-card {
+  flex: 0 0 auto;
+  width: 5.125rem;
+  min-width: 5.125rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--color-background-primary-default);
+  border: 1px solid var(--color-border-general-primary);
   border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-text-primary-default) 5%, transparent);
+  box-sizing: border-box;
 }
 
-.color-palette-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--font-size-12);
-  font-family: var(--font-family-primary);
-}
-
-.color-palette-table th,
-.color-palette-table td {
-  padding: var(--space-xs-md) var(--space-sm-sm);
-  text-align: left;
-  border-bottom: 1px solid var(--color-border-general-secondary);
-  vertical-align: middle;
-}
-
-.color-palette-table th {
-  background: var(--color-bg);
-  color: var(--color-text-muted);
-  font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-doc-label);
-  white-space: nowrap;
-}
-
-.color-palette-table tr:last-child td {
-  border-bottom: none;
-}
-
-.color-palette-table-token {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: var(--font-size-12);
-  word-break: break-all;
-  max-width: 14rem;
-  color: var(--color-text-primary-default);
-}
-
-.color-palette-swatch-cell {
-  width: 3rem;
-}
-
-.color-palette-mini-swatch {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: var(--radius-sm);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-text-primary-default) 10%, transparent);
-}
-
-.color-contrast-cell {
-  display: inline-flex;
+.color-palette-swatch-chip {
+  display: flex;
   align-items: center;
-  gap: var(--space-xs-sm);
-  white-space: nowrap;
+  justify-content: center;
+  height: 2.8rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.color-palette-swatch-contrast {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 100%;
+  padding: 0 var(--space-xs-xs);
+  font-family: var(--font-family-primary);
+  font-size: 10px;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.2;
+  text-align: center;
   font-variant-numeric: tabular-nums;
 }
 
-.color-contrast-badge {
-  display: inline-block;
-  padding: 0 var(--space-xs-sm);
-  border-radius: var(--radius-xs);
+.color-palette-swatch-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  padding: var(--space-xs-sm) var(--space-xs-lg);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.color-palette-swatch-step {
+  margin: 0;
   font-size: var(--font-size-12);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-15);
+  color: var(--color-text-secondary-default);
 }
 
-.color-contrast-badge.is-aaa {
-  background: color-mix(in srgb, #039855 14%, transparent);
-  color: #027a48;
+.color-palette-swatch-hex-row {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  font-size: var(--font-size-12);
+  line-height: var(--line-height-15);
+  font-family: var(--font-family-primary);
 }
 
-.color-contrast-badge.is-aa {
-  background: var(--color-doc-badge-bg);
-  color: var(--color-text-brand-primary);
-}
-
-.color-contrast-badge.is-a {
-  background: var(--color-background-primary-hover);
+.color-palette-swatch-hash {
   color: var(--color-text-quaternary-default);
+  flex-shrink: 0;
+}
+
+.color-palette-swatch-hex {
+  min-width: 0;
+  color: var(--color-text-secondary-default);
+  font-variant-numeric: tabular-nums;
+  word-break: break-all;
 }
 
 .color-palette-na {

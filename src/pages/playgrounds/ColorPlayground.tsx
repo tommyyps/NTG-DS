@@ -4,14 +4,16 @@ import {
   buildUtilityVariableRows,
   buildVariableRowsByCategory,
   CATEGORY_LABELS,
+  getPrimitiveScale700Hex,
+  PALETTE_CONST_WHITE_HEX,
+  PALETTE_ON_LIGHT_FALLBACK_HEX,
+  type PaletteFamily,
   type SemanticCategory,
   type VariableRow,
 } from "./figmaColorTokens";
 import {
   contrastRatio,
   formatContrastRatio,
-  REF_BLACK,
-  REF_WHITE,
   wcagTextLevel,
 } from "../../utils/wcagContrast";
 import "../../site/PlaygroundShell.css";
@@ -157,26 +159,113 @@ function ColorWcagLevelsDemo() {
   );
 }
 
-function ContrastAgainst({
-  hex,
-  refHex,
+function normalizeHexKey(hex: string): string {
+  return hex.replace(/^#/, "").toLowerCase();
+}
+
+/** พื้นโทนอ่อน: ใช้สีเบอร์ 700 ของสเกลเดียวกัน — พื้นโทนเข้ม: const white (และเมื่อ 700 บน 700 หรือไม่ถึง AA กับ 700 ให้ใช้ขาว) */
+function paletteContrastForegroundHex(
+  familyId: string,
+  bgHex: string,
+  stepLabel: string,
+): string {
+  const white = PALETTE_CONST_WHITE_HEX;
+  const c700 =
+    getPrimitiveScale700Hex(familyId) ?? PALETTE_ON_LIGHT_FALLBACK_HEX;
+
+  if (!isOpaqueHex6(bgHex)) return white;
+  if (stepLabel === "700") return white;
+
+  const bgN = normalizeHexKey(bgHex);
+  const c700N = normalizeHexKey(c700);
+  if (bgN === c700N) return white;
+
+  const cr = contrastRatio(bgHex, c700);
+  if (cr != null && cr >= 4.5) return c700;
+  return white;
+}
+
+function PaletteSwatchContrastLabel({
+  bgHex,
+  fgHex,
 }: {
-  hex: string;
-  refHex: string;
+  bgHex: string;
+  fgHex: string;
 }) {
-  if (!isOpaqueHex6(hex)) {
-    return <span className="color-palette-na">โปร่ง</span>;
+  if (!isOpaqueHex6(bgHex) || !isOpaqueHex6(fgHex)) {
+    return (
+      <span className="color-palette-swatch-contrast color-palette-na">โปร่ง</span>
+    );
   }
-  const r = contrastRatio(hex, refHex);
-  if (r == null) return <span className="color-palette-na">—</span>;
+  const r = contrastRatio(bgHex, fgHex);
+  if (r == null) {
+    return <span className="color-palette-swatch-contrast color-palette-na">—</span>;
+  }
   const lvl = wcagTextLevel(r);
-  const cls =
-    lvl === "AAA" ? "is-aaa" : lvl === "AA" ? "is-aa" : "is-a";
   return (
-    <span className="color-contrast-cell">
-      {formatContrastRatio(r)}:1
-      <span className={`color-contrast-badge ${cls}`}>{lvl}</span>
+    <span className="color-palette-swatch-contrast" style={{ color: fgHex }}>
+      <span className="color-palette-swatch-contrast-lvl">{lvl}</span>
+      <span className="color-palette-swatch-contrast-ratio">
+        {formatContrastRatio(r)}:1
+      </span>
     </span>
+  );
+}
+
+function ColorPaletteFamilySection({ family }: { family: PaletteFamily }) {
+  const scaleHint =
+    family.id === "ams" || family.id === "base"
+      ? null
+      : `Token = color/${family.id}/[เบอร์ 25–950]`;
+
+  return (
+    <div className="color-palette-family-block">
+      <div className="color-doc-subsection-head">
+        <h3 className="color-doc-subsection-title">{family.label}</h3>
+        {scaleHint ? <p className="color-doc-p">{scaleHint}</p> : null}
+        {family.note ? (
+          <p className="color-doc-p color-doc-p--measure">{family.note}</p>
+        ) : null}
+      </div>
+      <div className="color-palette-row-wrap">
+        <div
+          className="color-palette-row"
+          role="list"
+          aria-label={`จานสี ${family.label}`}
+        >
+          {family.swatches.map((s) => {
+            const fg = paletteContrastForegroundHex(
+              family.id,
+              s.hex,
+              s.stepLabel,
+            );
+            const hexDisplay = s.hex.replace(/^#/i, "").toUpperCase();
+            return (
+              <div
+                key={s.token}
+                className="color-palette-swatch-card"
+                role="listitem"
+                title={s.token}
+              >
+                <div
+                  className="color-palette-swatch-chip"
+                  style={{ backgroundColor: s.hex }}
+                >
+                  <PaletteSwatchContrastLabel bgHex={s.hex} fgHex={fg} />
+                </div>
+                <div className="color-palette-swatch-meta">
+                  <p className="color-palette-swatch-step">{s.stepLabel}</p>
+                  <p className="color-palette-swatch-hex-row">
+                    <span className="color-palette-swatch-hash">#</span>
+                    <span className="color-palette-swatch-hex">{hexDisplay}</span>
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -550,54 +639,15 @@ export function ColorPlayground() {
             <div className="playground-preview-pane color-palette-pane">
               <p className="color-doc-p color-doc-p--measure">
                 ดึงค่า <span className="color-doc-em">primitive/color</span> จาก Figma Variables ตาม snapshot
-                แต่ละแถวมี <span className="color-doc-em">Hex</span> และคะแนนความต่างของสีเทียบพื้นขาวกับพื้นดำ
-                (แบ่งเป็น A / AA / AAA สำหรับตัวหนังสือธรรมดา) ใกล้เคียงปลั๊กอิน Color Contrast Checker
+                แสดงเป็นพาเลตแนวนอนแบบการ์ดต่อเบอร์สี แต่ละชิปแสดง{" "}
+                <span className="color-doc-em">Hex</span> และระดับ WCAG ของข้อความบนพื้นสีนั้น
+                โดยบนพื้นโทนอ่อนใช้สีตัวอักษรเบอร์{" "}
+                <span className="color-doc-em">700</span> ของสเกลเดียวกัน บนพื้นโทนเข้มใช้{" "}
+                <span className="color-doc-em">const white</span> (
+                <code>color/component/background/general/const-white</code>)
               </p>
               {paletteFamilies.map((family) => (
-                <div key={family.id} className="color-palette-family-block">
-                  <h3 className="color-palette-family-title">{family.label}</h3>
-                  {family.note ? (
-                    <p className="color-palette-family-note">{family.note}</p>
-                  ) : null}
-                  <div className="color-palette-table-wrap">
-                    <table className="color-palette-table">
-                      <thead>
-                        <tr>
-                          <th scope="col">เบอร์</th>
-                          <th scope="col">สี</th>
-                          <th scope="col">Hex</th>
-                          <th scope="col">Token</th>
-                          <th scope="col">Contrast กับขาว</th>
-                          <th scope="col">Contrast กับดำ</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {family.swatches.map((s) => (
-                          <tr key={s.token}>
-                            <td>{s.stepLabel}</td>
-                            <td className="color-palette-swatch-cell">
-                              <div
-                                className="color-palette-mini-swatch"
-                                style={{ backgroundColor: s.hex }}
-                                title={s.hex}
-                              />
-                            </td>
-                            <td>
-                              <span className="color-var-hex">{s.hex}</span>
-                            </td>
-                            <td className="color-palette-table-token">{s.token}</td>
-                            <td>
-                              <ContrastAgainst hex={s.hex} refHex={REF_WHITE} />
-                            </td>
-                            <td>
-                              <ContrastAgainst hex={s.hex} refHex={REF_BLACK} />
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                <ColorPaletteFamilySection key={family.id} family={family} />
               ))}
             </div>
           </div>

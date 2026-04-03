@@ -300,6 +300,20 @@ export const FIGMA_SEMANTIC_HEX: Record<string, string> = {
   "color/background/system/success-solid-hover": "#027a48",
 };
 
+/** สีข้อความ const white — วัด contrast บนพื้นเข้ม (จานสี primitive) */
+export const PALETTE_CONST_WHITE_HEX =
+  FIGMA_SEMANTIC_HEX["color/component/background/general/const-white"] ??
+  "#ffffff";
+
+/** เบอร์ 700 ของสเกล primitive ตามชื่อครอบครัว (ไม่มีใน ams/base จะได้ undefined) */
+export function getPrimitiveScale700Hex(familyId: string): string | undefined {
+  return FIGMA_PRIMITIVE_HEX[`color/${familyId}/700`];
+}
+
+/** สีตัวอักษรบนพื้นอ่อน เมื่อครอบครัวไม่มีสเกล 700 */
+export const PALETTE_ON_LIGHT_FALLBACK_HEX =
+  FIGMA_PRIMITIVE_HEX["color/gray-light/700"] ?? "#344054";
+
 /**
  * ค่าโหมดมืด (snapshot) — เติมเมื่อ export จาก Figma mode มืดได้
  * คีย์เดียวกับ FIGMA_SEMANTIC_HEX / FIGMA_UTILITY_HEX

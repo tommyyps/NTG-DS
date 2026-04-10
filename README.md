@@ -1,73 +1,27 @@
-# React + TypeScript + Vite
+# Nation Group Thailand Design System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Monorepo สำหรับดีไซน์ซิสเท็มกลาง — แยก **โทเค็น** (ใช้ข้าม framework) กับ **ไซต์เอกสาร** (React)
 
-Currently, two official plugins are available:
+## โครงสร้าง
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| โฟลเดอร์ | บทบาท |
+|-----------|--------|
+| `packages/tokens` | **`@ntgds/tokens`** — `css-variables.css`, `tokens.mjs`, `tokens.json` (สำหรับ React, Next.js, Vue, ฯลฯ) |
+| `apps/docs` | **`@ntgds/docs`** — ไซต์ Vite + React (playground / เอกสาร) |
+| `ntgds-figma-tokens/` | JSON จาก Figma / Token Press (แหล่งอ้างอิง) |
+| `scripts/generate-tokens.mjs` | สร้างไฟล์จาก JSON → แพ็กเกจโทเค็น + ไฟล์ใน `apps/docs` |
 
-## React Compiler
+## คำสั่ง (รันที่ราก repo)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev          # generate โทเค็น + เปิดไซต์เอกสาร
+npm run build
+npm run tokens:generate
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## นำไปใช้ในโปรเจกต์อื่น
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+ดู **`packages/tokens/README.md`** — ติดตั้งแพ็กเกจ `@ntgds/tokens` แล้ว import CSS และ/หรือ `tokens.mjs`
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+(การ publish ไป npm registry ยังต้องตั้งค่า scope/เวอร์ชันตามนโยบายทีม)

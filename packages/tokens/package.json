@@ -1,0 +1,19 @@
+{
+  "name": "@ntgds/tokens",
+  "version": "0.1.0",
+  "description": "Nation Group Thailand Design System — โทเค็นกลาง (CSS variables + ข้อมูล JS) ใช้ร่วมกับ React, Next.js, Vue และอื่น ๆ",
+  "type": "module",
+  "license": "UNLICENSED",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    "./css-variables.css": "./dist/css-variables.css",
+    "./tokens": "./dist/tokens.mjs",
+    "./tokens.json": "./dist/tokens.json"
+  },
+  "sideEffects": [
+    "./dist/css-variables.css"
+  ]
+}

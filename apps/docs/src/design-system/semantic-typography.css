@@ -1,0 +1,246 @@
+/**
+ * Design system — Typography รวมศูนย์
+ * - --type-* = semantic scale (อ้าง primitive เดียวกับ Figma / css-variables.css)
+ * - .ds-type-* = คลาด canonical สำหรับคอมโพเนนต์และเอกสาร
+ * - .doc-type-* = alias เดิม (backward compat)
+ *
+ * คอมโพเนนต์ UI เฉพาะทาง:
+ * - .ds-type-button-label  ≡ text/sm-semibold (ปุ่ม)
+ * - .ds-type-badge-label   ≡ text/xs-semibold (ป้ายสถานะ)
+ */
+
+:root {
+  --type-font-doc: var(--font-family-primary);
+
+  --type-page-title-size: var(--font-size-doc-page-title);
+  --type-page-title-weight: var(--font-weight-bold);
+  --type-page-title-lh: var(--line-height-doc-page-title);
+  --type-page-title-track: var(--letter-spacing-doc-page-title);
+
+  --type-lead-size: var(--font-size-doc-lead);
+  --type-lead-lh: var(--line-height-doc-lead);
+  --type-lead-weight: var(--font-weight-regular);
+
+  --type-section-label-size: var(--font-size-16);
+  --type-section-label-weight: var(--font-weight-semibold);
+  --type-section-label-lh: var(--line-height-24);
+  --type-section-label-track: var(--letter-spacing-doc-label);
+
+  --type-heading-size: var(--font-size-20);
+  --type-heading-weight: var(--font-weight-bold);
+  --type-heading-lh: var(--line-height-22-5);
+  --type-heading-track: var(--letter-spacing-none);
+
+  --type-subheading-size: var(--font-size-18);
+  --type-subheading-weight: var(--font-weight-semibold);
+  --type-subheading-lh: var(--line-height-21);
+
+  --type-title-size: var(--font-size-18);
+  --type-title-weight: var(--font-weight-medium);
+  --type-title-lh: var(--line-height-27);
+
+  --type-subtitle-size: var(--font-size-16);
+  --type-subtitle-weight: var(--font-weight-semibold);
+  --type-subtitle-lh: var(--line-height-24);
+
+  --type-body-size: var(--font-size-16);
+  --type-body-weight: var(--font-weight-regular);
+  --type-body-lh: var(--line-height-24);
+
+  --type-body-th-lh: var(--line-height-27);
+
+  --type-body-secondary-size: var(--font-size-14);
+  --type-body-secondary-weight: var(--font-weight-regular);
+  --type-body-secondary-lh: var(--line-height-21);
+
+  --type-caption-size: var(--font-size-12);
+  --type-caption-weight: var(--font-weight-regular);
+  --type-caption-lh: var(--line-height-18);
+
+  --type-label-size: var(--font-size-14);
+  --type-label-weight: var(--font-weight-medium);
+  --type-label-lh: var(--line-height-21);
+
+  --type-table-header-size: var(--font-size-12);
+  --type-table-header-weight: var(--font-weight-semibold);
+  --type-table-header-lh: var(--line-height-18);
+  --type-table-header-track: var(--letter-spacing-doc-label);
+
+  --type-em-weight: var(--font-weight-medium);
+
+  --type-controls-title-size: var(--font-size-18);
+  --type-controls-title-weight: var(--font-weight-bold);
+  --type-controls-title-lh: var(--line-height-24);
+
+  --type-brand-wordmark-size: var(--font-size-18);
+  --type-brand-wordmark-weight: var(--font-weight-bold);
+  --type-brand-wordmark-lh: var(--line-height-24);
+
+  /* ผูกกับ text token เดียวกัน (primitive) */
+  --type-button-label-font: var(--font-family-primary);
+  --type-button-label-size: var(--font-size-14);
+  --type-button-label-weight: var(--font-weight-semibold);
+  --type-button-label-lh: var(--line-height-16-5);
+  --type-button-label-track: var(--letter-spacing-none);
+
+  --type-badge-label-font: var(--font-family-primary);
+  --type-badge-label-size: var(--font-size-12);
+  --type-badge-label-weight: var(--font-weight-semibold);
+  --type-badge-label-lh: var(--line-height-13-5);
+  --type-badge-label-track: var(--letter-spacing-none);
+}
+
+.ds-typography {
+  margin: 0;
+}
+
+.ds-type-page-title,
+.doc-type-page-title {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-page-title-size);
+  font-weight: var(--type-page-title-weight);
+  line-height: var(--type-page-title-lh);
+  letter-spacing: var(--type-page-title-track);
+}
+
+.ds-type-lead,
+.doc-type-lead {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-lead-size);
+  font-weight: var(--type-lead-weight);
+  line-height: var(--type-lead-lh);
+}
+
+.ds-type-section-label,
+.doc-type-section-label {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-section-label-size);
+  font-weight: var(--type-section-label-weight);
+  line-height: var(--type-section-label-lh);
+  letter-spacing: var(--type-section-label-track);
+  text-transform: uppercase;
+}
+
+.ds-type-heading,
+.doc-type-heading {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-heading-size);
+  font-weight: var(--type-heading-weight);
+  line-height: var(--type-heading-lh);
+  letter-spacing: var(--type-heading-track);
+}
+
+.ds-type-subheading,
+.doc-type-subheading {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-subheading-size);
+  font-weight: var(--type-subheading-weight);
+  line-height: var(--type-subheading-lh);
+}
+
+.ds-type-title,
+.doc-type-title {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-title-size);
+  font-weight: var(--type-title-weight);
+  line-height: var(--type-title-lh);
+}
+
+.ds-type-subtitle,
+.doc-type-subtitle {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-subtitle-size);
+  font-weight: var(--type-subtitle-weight);
+  line-height: var(--type-subtitle-lh);
+}
+
+.ds-type-body,
+.doc-type-body {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: var(--type-body-lh);
+}
+
+.ds-type-body-th,
+.doc-type-body-th {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: var(--type-body-th-lh);
+}
+
+.ds-type-body-secondary,
+.doc-type-body-secondary {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-secondary-size);
+  font-weight: var(--type-body-secondary-weight);
+  line-height: var(--type-body-secondary-lh);
+}
+
+.ds-type-caption,
+.doc-type-caption {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-lh);
+}
+
+.ds-type-label,
+.doc-type-label {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-label-lh);
+}
+
+.ds-type-table-header,
+.doc-type-table-header {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-table-header-size);
+  font-weight: var(--type-table-header-weight);
+  line-height: var(--type-table-header-lh);
+  letter-spacing: var(--type-table-header-track);
+  text-transform: uppercase;
+}
+
+.ds-type-em,
+.doc-type-em {
+  font-weight: var(--type-em-weight);
+}
+
+.ds-type-controls-title,
+.doc-type-controls-title {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-controls-title-size);
+  font-weight: var(--type-controls-title-weight);
+  line-height: var(--type-controls-title-lh);
+  letter-spacing: var(--type-section-label-track);
+  text-transform: uppercase;
+}
+
+.ds-type-brand-wordmark,
+.doc-type-brand-wordmark {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-brand-wordmark-size);
+  font-weight: var(--type-brand-wordmark-weight);
+  line-height: var(--type-brand-wordmark-lh);
+  letter-spacing: -0.02em;
+}
+
+/* —— ปุ่ม / Badge — ตรงกับ Typography token text/sm-semibold · text/xs-semibold —— */
+.ds-type-button-label {
+  font-family: var(--type-button-label-font);
+  font-size: var(--type-button-label-size);
+  font-weight: var(--type-button-label-weight);
+  line-height: var(--type-button-label-lh);
+  letter-spacing: var(--type-button-label-track);
+}
+
+.ds-type-badge-label {
+  font-family: var(--type-badge-label-font);
+  font-size: var(--type-badge-label-size);
+  font-weight: var(--type-badge-label-weight);
+  line-height: var(--type-badge-label-lh);
+  letter-spacing: var(--type-badge-label-track);
+}

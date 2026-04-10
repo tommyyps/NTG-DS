@@ -1,0 +1,66 @@
+{
+  "device": {
+    "$type": "string",
+    "$value": "mobile",
+    "$extensions": {
+      "figma": {
+        "variableId": "VariableID:8432:5",
+        "collection": "VariableCollectionId:8432:4",
+        "scopes": [
+          "TEXT_CONTENT"
+        ],
+        "codeSyntax": {}
+      }
+    }
+  },
+  "device-width": {
+    "$type": "dimension",
+    "$value": "375px",
+    "$extensions": {
+      "figma": {
+        "variableId": "VariableID:8432:6",
+        "collection": "VariableCollectionId:8432:4",
+        "scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ],
+        "codeSyntax": {}
+      }
+    }
+  },
+  "scale": {
+    "$type": "dimension",
+    "$value": "1.25px",
+    "$extensions": {
+      "figma": {
+        "variableId": "VariableID:8432:7",
+        "collection": "VariableCollectionId:8432:4",
+        "scopes": [
+          "WIDTH_HEIGHT",
+          "GAP"
+        ],
+        "codeSyntax": {}
+      }
+    }
+  },
+  "root-font-size": {
+    "$type": "dimension",
+    "$value": "{typography.font-size.16}",
+    "$extensions": {
+      "figma": {
+        "variableId": "VariableID:8432:8",
+        "collection": "VariableCollectionId:8432:4",
+        "scopes": [
+          "FONT_SIZE"
+        ],
+        "codeSyntax": {}
+      }
+    }
+  },
+  "$extensions": {
+    "generator": {
+      "name": "Token Press",
+      "version": "1.0.0"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+.doc-article {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md-xs);
+  width: 100%;
+  max-width: none;
+}
+
+/* ไม่ให้เนื้อหา playground ดันความกว้างเลย์เอาต์หลักเมื่อมี min-content ใหญ่ */
+.doc-playground-bleed {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.doc-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-md);
+  max-width: var(--layout-doc-content-max-width);
+}
+
+/* สอดคล้อง doc-typography.css — หัวเพจ + คำนำ */
+.doc-title {
+  margin: 0;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-page-title-size);
+  font-weight: var(--type-page-title-weight);
+  letter-spacing: var(--type-page-title-track);
+  line-height: var(--type-page-title-lh);
+}
+
+.doc-lead {
+  margin: 0;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-lead-size);
+  font-weight: var(--type-lead-weight);
+  line-height: var(--type-lead-lh);
+  color: var(--color-text-muted);
+  max-width: 56ch;
+}

@@ -1,0 +1,91 @@
+/**
+ * ป้ายตัวอย่างสีแบบเอกสาร 01 Color — Tiers (Figma 8541:6971)
+ * ใช้ใน Color variables และ playground Badges
+ */
+
+/* Figma color-variable-row 8567:41319 — gap 8, py 4 pl 6 pr 8, border black 10% */
+.ds-color-swatch-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs-lg);
+  padding: var(--space-xs-sm) var(--space-xs-lg) var(--space-xs-sm) var(--space-xs-sm);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary-default) 10%, transparent);
+  border-radius: var(--radius-full);
+  background: var(--color-background-primary-default);
+  max-width: 100%;
+  box-shadow: none;
+  filter: none;
+}
+
+.ds-color-swatch-badge--on-dark {
+  background: var(--color-background-primary-solid);
+  border-color: color-mix(in srgb, var(--color-text-primary-default) 10%, transparent);
+}
+
+.ds-color-swatch-badge--on-dark.ds-color-swatch-badge--empty {
+  opacity: 1;
+}
+
+.ds-color-swatch-badge--on-dark .ds-color-swatch-badge__label {
+  color: var(--color-text-system-white);
+}
+
+.ds-color-swatch-badge--on-dark .ds-color-swatch-badge__swatch--placeholder {
+  background: color-mix(in srgb, var(--color-text-system-white) 10%, transparent);
+}
+
+.ds-color-swatch-badge--empty {
+  opacity: 0.85;
+}
+
+/* ไม่ใส่ border ที่วงนอก — ซ้อนกับขอบของ __swatch จะดูเป็นเงา/ร่อง */
+.ds-color-swatch-badge__ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  box-shadow: none;
+  filter: none;
+  background: transparent;
+}
+
+/* เส้นขอบรอบวงสวอชทั้งกรณีมีสีและว่าง — ให้เห็นขอบเมื่อสีอ่อน/ขาว */
+.ds-color-swatch-badge__swatch {
+  display: block;
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  border: 1px solid color-mix(in srgb, var(--color-text-primary-default) 22%, transparent);
+  box-shadow: none;
+  filter: none;
+}
+
+.ds-color-swatch-badge--on-dark .ds-color-swatch-badge__swatch {
+  border-color: color-mix(in srgb, var(--color-text-system-white) 28%, transparent);
+  box-shadow: none;
+}
+
+.ds-color-swatch-badge__swatch--placeholder {
+  background: color-mix(in srgb, var(--color-text-primary-default) 6%, transparent);
+}
+
+/* ฟอนต์จาก .ds-type-badge-label (ร่วมกับ Status Badge) — ที่นี่เฉพาะสี/เลย์เอาต์ */
+.ds-color-swatch-badge__label {
+  color: var(--color-text-primary-default);
+  white-space: nowrap;
+}
+
+.ds-color-swatch-badge__label--mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: var(--color-text-secondary-default);
+}
+
+.ds-color-swatch-badge__label--truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 11rem;
+}

@@ -1,0 +1,296 @@
+.playground {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--layout-playground-controls-width);
+  gap: var(--space-sm-lg);
+  align-items: start;
+}
+
+.playground-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-xl);
+  min-width: 0;
+}
+
+.playground-preview {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.playground-preview-label {
+  flex-shrink: 0;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-section-label-size);
+  font-weight: var(--type-section-label-weight);
+  line-height: var(--type-section-label-lh);
+  text-transform: uppercase;
+  letter-spacing: var(--type-section-label-track);
+  color: var(--color-text-muted);
+  padding: var(--space-sm-md) var(--space-sm-lg);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+/* พื้นที่พรีวิวพื้นขาว — ใช้ร่วมกับ Typography specimen และ PlaygroundShell */
+.playground-preview-pane {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: var(--color-background-primary-default);
+  padding: var(--space-md-sm) var(--space-md-md);
+  overflow: hidden;
+}
+
+.playground-canvas {
+  min-height: var(--layout-playground-canvas-min-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* โค้ดติดใต้พรีวิวในการ์ดเดียว (เช่นเดียวกับ Typography specimen) */
+.playground-preview-code-wrap {
+  flex-shrink: 0;
+  margin: 0;
+}
+
+.playground-preview-code-wrap .code-block {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  border-top: 1px solid var(--color-code-header-border, var(--color-border));
+}
+
+.playground-preview-code-wrap .code-block pre {
+  padding: var(--space-md-sm) var(--space-md-md);
+}
+
+.playground-controls-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-sm);
+}
+.playground-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-xs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm-xl) var(--space-sm-lg);
+  background: var(--color-surface);
+  position: sticky;
+  top: var(--layout-playground-controls-sticky-top);
+}
+
+.playground-controls-title {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-controls-title-size);
+  font-weight: var(--type-controls-title-weight);
+  line-height: var(--type-controls-title-lh);
+  text-transform: uppercase;
+  letter-spacing: var(--type-section-label-track);
+  color: var(--color-text);
+}
+
+.playground-controls-sub-title {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-secondary-size);
+  font-weight: var(--type-body-secondary-weight);
+  line-height: var(--type-body-secondary-lh);
+  color: var(--color-text-muted);
+}
+
+.control-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-md);
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-secondary-size);
+  font-weight: var(--type-body-secondary-weight);
+  line-height: var(--type-body-secondary-lh);
+}
+
+.control-field-label {
+  font-weight: var(--type-subtitle-weight);
+}
+
+.control-field-hint {
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-lh);
+  color: var(--color-text-muted);
+}
+
+.control-select,
+.control-input,
+.control-textarea {
+  width: 100%;
+  padding: var(--space-xs-lg) var(--space-xs-xl);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.control-textarea {
+  resize: vertical;
+  min-height: calc(var(--space-md-sm) * 2 + var(--space-md-xs));
+}
+
+.control-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs-lg);
+  cursor: pointer;
+}
+
+/* Checkbox / radio / range — ใช้สีแบรนด์ (ไม่ใช้ accent ระบบปฏิบัติการ) */
+.playground-controls input[type="checkbox"],
+.playground-controls input[type="radio"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  accent-color: var(--color-brand);
+  cursor: pointer;
+}
+
+.playground-controls input[type="range"] {
+  width: 100%;
+  max-width: 100%;
+  height: 1.5rem;
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--color-brand);
+  background: transparent;
+}
+
+.playground-controls input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-general-secondary, var(--color-border));
+}
+
+.playground-controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -5px;
+  border-radius: var(--radius-full);
+  background: var(--color-brand);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-text-primary-default) 12%, transparent);
+}
+
+.playground-controls input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border-general-secondary, var(--color-border));
+}
+
+.playground-controls input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--color-brand);
+  cursor: pointer;
+}
+
+.playground-error {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-secondary-size);
+  font-weight: var(--type-body-secondary-weight);
+  line-height: var(--type-body-secondary-lh);
+  color: var(--color-text-system-error);
+}
+
+.code-block {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-code-bg);
+  color: var(--color-code-text);
+}
+
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md-xs);
+  padding: var(--space-sm-md) var(--space-sm-lg);
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-secondary-size);
+  font-weight: var(--type-body-secondary-weight);
+  line-height: var(--type-body-secondary-lh);
+  text-transform: uppercase;
+  letter-spacing: var(--type-table-header-track);
+  border-bottom: 1px solid var(--color-code-header-border);
+  color: var(--color-code-muted);
+}
+
+.code-block-copy {
+  flex-shrink: 0;
+  padding: var(--space-xs-sm) var(--space-xs-md);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-code-copy-border);
+  background: var(--color-code-copy-bg);
+  color: var(--color-code-text);
+  font: inherit;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-subheading-weight);
+  line-height: var(--type-caption-lh);
+  letter-spacing: 0.02em;
+  text-transform: none;
+  cursor: pointer;
+}
+
+.code-block-copy:hover {
+  background: var(--color-code-copy-bg-hover);
+  border-color: var(--color-code-copy-border-hover);
+}
+
+.code-block-copy:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+.code-block pre {
+  padding: var(--space-md-xs) var(--space-md-sm);
+  overflow: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: var(--font-size-code-block);
+  line-height: var(--line-height-code-block);
+}
+
+.code-block code {
+  white-space: pre;
+}
+
+@media (max-width: 960px) {
+  .playground {
+    grid-template-columns: 1fr;
+  }
+
+  .playground-main {
+    gap: var(--space-md-xs);
+  }
+
+  .playground-controls {
+    position: static;
+  }
+}

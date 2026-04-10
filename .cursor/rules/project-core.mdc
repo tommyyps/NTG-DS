@@ -1,0 +1,30 @@
+---
+description: โปรเจกต์ NTG Design System — stack, โทเค็น Figma, ไฟล์ generate
+alwaysApply: true
+---
+
+# Nation Group Thailand Design System — หลักโปรเจกต์
+
+## Stack (monorepo)
+
+- **แพ็กเกจกลาง:** `packages/tokens` → **`@ntgds/tokens`** (CSS variables + `tokens.mjs` + `tokens.json`) ใช้กับ React / Next / Vue
+- **ไซต์เอกสาร:** `apps/docs` → **Vite + React 19 + TypeScript**, `react-router-dom`
+- ดีไซน์โทเค็นต้นทาง: `ntgds-figma-tokens/*.json` (export จาก Figma / Token Press)
+
+## Pipeline โทเค็น
+
+- รัน **`npm run tokens:generate`** ที่ราก repo (หรือ `build` / `dev` จะเรียกให้) — **`scripts/generate-tokens.mjs`**
+- อย่าแก้มือในไฟล์ generate:
+  - `packages/tokens/dist/css-variables.css`, `tokens.mjs`, `tokens.json`
+  - `apps/docs/src/design-system/generated/tokens.ts`
+  - `apps/docs/src/pages/playgrounds/generated/figmaColorSnapshot.ts`
+- แก้ที่ JSON ใน `ntgds-figma-tokens/` หรือ logic ใน `scripts/generate-tokens.mjs` แล้วรัน generate ใหม่
+
+## Playground / เอกสาร
+
+- โค้ดอยู่ใน **`apps/docs/src/`** — Playground ใช้ **`PlaygroundShell`**, สไตล์ร่วมใน `apps/docs/src/site/PlaygroundShell.css`
+- `main.tsx` โหลด **`@ntgds/tokens/css-variables.css`**
+
+## ขอบเขตการแก้
+
+- แก้เฉพาะสิ่งที่งานขอ — ไม่ refactor ยกก้อนหรือแตะไฟล์ที่ไม่เกี่ยว

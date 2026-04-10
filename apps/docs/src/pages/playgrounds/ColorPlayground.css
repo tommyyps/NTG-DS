@@ -1,0 +1,607 @@
+/* หน้า 01 Color — คอลัมน์เดียว สอดคล้อง playground-preview */
+.color-page-column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-sm-xl);
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+}
+
+/* การ์ด Documentation เต็มความกว้างคอลัมน์ — เนื้อหาข้างใน pane ขยายตาม */
+.color-playground-preview--docs {
+  width: 100%;
+  align-self: stretch;
+}
+
+.color-doc-playground-pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.color-doc-pane-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg-sm);
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+/*
+ * บล็อกเอกสารในการ์ด Documentation — ใช้เฉพาะภายใน .color-doc-playground-pane
+ * รวม selector เดียวเพื่อไม่ให้สับสนกับ max-width 72ch ที่เคยใช้คู่กับ override
+ */
+.color-doc-playground-pane .color-doc-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-sm);
+  margin: 0;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.color-doc-playground-pane .color-doc-block--tiers {
+  gap: var(--space-sm-md);
+}
+
+/* Token แถว Tiers — แยกจากตาราง Color variables (Figma 8567:41319 ใช้เส้น primary + ระยะ 16px) */
+.color-tiers-diagram {
+  --color-doc-tier-row-pad-y: var(--space-sm-md);
+  --color-doc-tier-row-pad-x: var(--space-sm-xl);
+  --color-doc-tier-row-bg: var(--color-background-primary-default);
+  --color-doc-tier-row-border: var(--color-border-general-secondary);
+}
+
+.color-tiers-diagram {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: var(--color-background-primary-default);
+  border: 1px solid var(--color-border-general-secondary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.color-tiers-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.color-tiers-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm-md);
+  padding: var(--color-doc-tier-row-pad-y) var(--color-doc-tier-row-pad-x);
+  background: var(--color-doc-tier-row-bg);
+}
+
+.color-tiers-row:not(:last-child) {
+  border-bottom: 1px solid var(--color-doc-tier-row-border);
+}
+
+.color-tiers-row--component {
+  row-gap: var(--space-sm-sm);
+}
+
+/* เลขลำดับแถว — ฟอนต์จาก Typography เท่านั้น (เทียบเท่าคอลัมน์ลำดับในตารางตัวแปรสี) */
+.color-tiers-step {
+  flex-shrink: 0;
+}
+
+.color-tiers-tier-label {
+  flex: 0 0 100px;
+  min-width: 5rem;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-label-lh);
+  color: var(--color-text-primary-default);
+}
+
+.color-tiers-arrow {
+  flex-shrink: 0;
+  color: var(--color-text-secondary-default);
+}
+
+.color-tiers-demo-button {
+  flex-shrink: 0;
+  margin: 0;
+  padding: var(--space-xs-sm) var(--space-xs-md);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-label-lh);
+  color: var(--color-text-system-white);
+  background: var(--color-text-brand-primary);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-text-primary-default) 5%, transparent);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ตัวอย่างระดับ WCAG — ไม่มีกรอบชั้นนอก; กว้างเท่ากล่อง+gap ไม่ยืดตามจอ */
+.color-wcag-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm-md);
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+.color-wcag-demo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 120px;
+  aspect-ratio: 1;
+  height: auto;
+  border-radius: var(--radius-md);
+  background: var(--color-text-brand-primary);
+}
+
+.color-wcag-demo-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-subtitle-size);
+  font-weight: var(--type-subtitle-weight);
+  line-height: var(--type-subtitle-lh);
+  letter-spacing: var(--letter-spacing-none);
+}
+
+.color-wcag-demo-line {
+  display: block;
+}
+
+.color-wcag-demo-inner--aaa .color-wcag-demo-line {
+  color: var(--color-text-system-white);
+}
+
+.color-wcag-demo-inner--aa .color-wcag-demo-line {
+  color: #bdd8ff;
+}
+
+.color-wcag-demo-inner--a .color-wcag-demo-line {
+  color: #90c0ff;
+}
+
+/*
+ * Documentation (01 Color) — สเกลเดียวกับ site/doc-typography.css
+ * Heading → Subheading → Title → Subtitle → Body (ไทย) / Secondary / Caption
+ */
+
+/* Heading — หัวข้อบล็อกใหญ่ใน Documentation */
+.color-doc-h3 {
+  margin: 0;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-heading-size);
+  font-weight: var(--type-heading-weight);
+  line-height: var(--type-heading-lh);
+  letter-spacing: var(--type-heading-track);
+  color: var(--color-text-primary-default);
+}
+
+.color-doc-h4 {
+  margin: 0;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-subtitle-size);
+  font-weight: var(--type-subtitle-weight);
+  line-height: var(--type-subtitle-lh);
+  color: var(--color-text-primary-default);
+}
+
+.color-doc-naming-subsections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md-sm);
+}
+
+.color-doc-subsection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-xl);
+}
+
+/* Subtitle — หัวข้อกลุ่มย่อย (Namespace, Object, ตัวอย่าง ฯลฯ) */
+.color-doc-subsection-title {
+  margin: 0;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-subtitle-size);
+  font-weight: var(--type-subtitle-weight);
+  line-height: var(--type-subtitle-lh);
+  letter-spacing: var(--letter-spacing-none);
+  color: var(--color-text-primary-default);
+}
+
+/* ระดับ 3 — คำอธิบายสั้นใต้หัวกลุ่มย่อย (ชิดหัวข้อ) */
+.color-doc-subsection-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs-xs);
+}
+
+.color-doc-subsection-head > .color-doc-p {
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-secondary-size);
+  font-weight: var(--type-body-secondary-weight);
+  line-height: var(--type-body-secondary-lh);
+  color: var(--color-text-quaternary-default);
+}
+
+.color-doc-subsection-head > .color-doc-p.color-doc-p--multiline-hint {
+  white-space: pre-line;
+}
+
+/* บรรทัดที่มีโค้ดในกลุ่มหัว — อ่านชัดขึ้นเล็กน้อย */
+.color-doc-subsection-head > .color-doc-p:has(code) {
+  color: var(--color-text-secondary-default);
+}
+
+/* ระดับ 6 — แตกส่วนชื่อโทเค็นตัวอย่าง (เล็กกว่าเนื้อหาหลัก) */
+.color-doc-example-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-sm);
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style: disc;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-lh);
+  color: var(--color-text-quaternary-default);
+}
+
+.color-doc-example-breakdown li {
+  margin: 0;
+}
+
+.color-doc-example-breakdown code {
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-lh);
+}
+
+/* ระดับ 5 — คำศัพท์เน้นในเนื้อหา: หนากว่าข้อความธรรมดา แต่ไม่หนากว่าหัวข้อกลุ่มย่อย */
+.color-doc-em {
+  font-weight: var(--type-em-weight);
+  color: var(--color-text-primary-default);
+}
+
+/* Body (ไทย) — เนื้อหาหลักบล็อกเอกสาร */
+.color-doc-p {
+  margin: 0;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: var(--type-body-th-lh);
+  color: var(--color-text-secondary-default);
+}
+
+.color-doc-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-md);
+  margin: 0;
+  padding-left: 1.25rem;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-body-size);
+  font-weight: var(--type-body-weight);
+  line-height: var(--type-body-th-lh);
+  color: var(--color-text-secondary-default);
+}
+
+.color-doc-p--measure {
+  max-width: 72ch;
+  width: 100%;
+}
+
+.color-doc-p code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: var(--font-size-code-inline);
+  line-height: var(--type-body-secondary-lh);
+  padding: 0.1em 0.35em;
+  border-radius: var(--radius-xs);
+  background: var(--color-background-primary-hover);
+  border: 1px solid var(--color-border-general-secondary);
+  color: var(--color-text-primary-default);
+}
+
+/* จานสี + contrast */
+.color-palette-pane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md-sm);
+  min-width: 0;
+  max-height: min(85vh, 1200px);
+  overflow: auto;
+}
+
+.color-palette-family-block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs-xl);
+  min-width: 0;
+}
+
+.color-palette-row-wrap {
+  overflow-x: auto;
+  margin: 0;
+  padding-bottom: var(--space-xs-sm);
+  -webkit-overflow-scrolling: touch;
+}
+
+.color-palette-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm-sm);
+  align-items: flex-start;
+}
+
+/* การ์ดสีแนวนอน */
+.color-palette-swatch-card {
+  flex: 0 0 auto;
+  width: 8rem;
+  min-width: 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--color-background-primary-default);
+  border: 1px solid var(--color-border-general-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--color-text-primary-default) 5%, transparent);
+  box-sizing: border-box;
+}
+
+.color-palette-swatch-chip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.color-palette-swatch-contrast {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs-xs);
+  max-width: 100%;
+  padding: 0 var(--space-xs-xs);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.color-palette-swatch-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--space-xs-lg) var(--space-sm-xs);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* ขนาด/น้ำหนักหลักมาจาก Typography token (sm-semibold) — เหลือเฉพาะสี */
+.color-palette-swatch-step {
+  margin: 0;
+  color: var(--color-text-secondary-default);
+}
+
+.color-palette-swatch-hex-row {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-lh);
+}
+
+.color-palette-swatch-hash {
+  color: var(--color-text-quaternary-default);
+  flex-shrink: 0;
+}
+
+.color-palette-swatch-hex {
+  min-width: 0;
+  color: var(--color-text-secondary-default);
+  font-variant-numeric: tabular-nums;
+  word-break: break-all;
+}
+
+.color-palette-na {
+  color: var(--color-text-quaternary-default);
+}
+
+/* ตารางตัวแปร semantic / utility */
+.color-playground-pane-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md-lg);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.color-var-table-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm-md);
+  min-width: 0;
+}
+
+.color-var-section-title {
+  margin: 0;
+  font-family: var(--type-font-doc);
+  font-size: var(--type-subheading-size);
+  font-weight: var(--type-subheading-weight);
+  line-height: var(--type-subheading-lh);
+  color: var(--color-text-primary-default);
+}
+
+.color-var-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border-general-secondary);
+  border-radius: var(--radius-md);
+  margin: 0;
+  /* Figma color-variable-row 8567:41319 */
+  --color-var-row-pad: var(--space-sm-md);
+  --color-var-row-divider: var(--color-border-general-primary);
+}
+
+.color-var-table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse;
+}
+
+/* เซลล์: ไม่ใส่เส้นแบ่ง/พื้นหลัง — ใช้สไตล์ระดับแถว (เทียบเท่า .color-tiers-row) */
+.color-var-table th,
+.color-var-table td {
+  padding: 0;
+  text-align: left;
+  border-bottom: none;
+  vertical-align: top;
+}
+
+.color-var-table thead tr {
+  border-bottom: 1px solid var(--color-var-row-divider);
+}
+
+.color-var-table thead th {
+  padding-top: var(--color-var-row-pad);
+  padding-bottom: var(--color-var-row-pad);
+  padding-left: calc(var(--color-var-row-pad) / 2);
+  padding-right: calc(var(--color-var-row-pad) / 2);
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  vertical-align: middle;
+}
+
+.color-var-table thead th:first-child {
+  padding-left: var(--color-var-row-pad);
+}
+
+.color-var-table thead th:last-child {
+  padding-right: var(--color-var-row-pad);
+}
+
+.color-var-table tbody tr.color-var-table-row {
+  background: var(--color-background-primary-default);
+}
+
+.color-var-table tbody tr.color-var-table-row:not(:last-child) > td {
+  border-bottom: 1px solid var(--color-var-row-divider);
+}
+
+.color-var-table tbody tr.color-var-table-row > td {
+  padding-top: var(--color-var-row-pad);
+  padding-bottom: var(--color-var-row-pad);
+  padding-left: calc(var(--color-var-row-pad) / 2);
+  padding-right: calc(var(--color-var-row-pad) / 2);
+}
+
+.color-var-table tbody tr.color-var-table-row > td:first-child {
+  padding-left: var(--color-var-row-pad);
+}
+
+.color-var-table tbody tr.color-var-table-row > td:last-child {
+  padding-right: var(--color-var-row-pad);
+}
+
+.color-var-table th.color-var-order-cell {
+  min-width: 4.5rem;
+  width: auto;
+  text-align: center;
+}
+
+.color-var-table td.color-var-order-cell {
+  width: auto;
+  min-width: 2.5rem;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.color-var-token-title {
+  margin: 0;
+  max-width: 25rem;
+  color: var(--color-text-secondary-default);
+}
+
+.color-var-token-path {
+  margin: 0;
+  max-width: 25rem;
+  color: var(--color-text-quaternary-default);
+  word-break: break-all;
+}
+
+/* flex อยู่ที่ div ภายใน td — ไม่ใส่ flex ที่ td เพื่อไม่ให้โมเดลตารางเพี้ยน */
+.color-var-name-cell {
+  min-width: 0;
+  max-width: 25rem;
+  vertical-align: top;
+}
+
+.color-var-name-cell-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  min-width: 0;
+}
+
+.color-var-swatch-cell {
+  width: 14rem;
+  max-width: 14rem;
+  vertical-align: middle;
+}
+
+.color-var-swatch-cell-inner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 0;
+}
+
+.color-var-hex {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: var(--type-caption-size);
+  line-height: var(--type-caption-lh);
+  color: var(--color-text-secondary-default);
+}
+
+.color-var-detail {
+  vertical-align: top;
+  min-width: 0;
+  color: var(--color-text-primary-default);
+}
+
+/* token โหมดมืดว่าง */
+.color-var-dash {
+  color: var(--color-text-quaternary-default);
+}

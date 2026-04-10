@@ -1,0 +1,28 @@
+/**
+ * Typography — กฎการใช้ตัวแปรทั้งโปรเจกต์ (โหลดหลัง design-system/generated/css-variables.css)
+ *
+ * ขนาดตัวอักษร (CSS)
+ *   ใช้เฉพาะ --font-size-* จาก primitive + --font-size-body + semantic doc (--font-size-doc-*,
+ *   --font-size-code-block) และตัวแปรเสริมด้านล่างเท่านั้น — ห้ามเขียน px ดิบใน stylesheet
+ *
+ * น้ำหนัก
+ *   ใช้เฉพาะ --font-weight-regular | medium | semibold | bold (สอดคล้อง dsTokens.fontWeight)
+ *
+ * ลำดับหัวเรื่อง (ความสำคัญ)
+ *   ใช้คอมโพเนนต์ Typography + dsTokens.typography.heading: h1 > h2 > h3 > h4 > h5 > h6
+ *   (แต่ละระดับมีชุด weight แยก)
+ *
+ * โค้ด / TSX inline style
+ *   ขนาด: อ้าง dsTokens.fontSize หรือสตริง var(--font-size-*)
+ *   น้ำหนัก: dsTokens.fontWeight หรือ var(--font-weight-*)
+ */
+
+:root {
+  /* ไม่มีใน primitive JSON — letter-spacing ของ text styles หลายตัวใน Figma (เช่น xs/sm) */
+  --letter-spacing-text-wide: 2px;
+  /* ไม่มีใน primitive JSON — ใช้ป้ายจิ๋วบน swatch / placeholder เล็ก */
+  --font-size-micro: 10px;
+  --line-height-micro: 12px;
+  /* code ภายในย่อหน้าเนื้อหาหลัก (16px) — ลดหนึ่งขั้นจาก body */
+  --font-size-code-inline: var(--font-size-14);
+}
